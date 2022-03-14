@@ -6,13 +6,26 @@ using UnityEngine.EventSystems;
 
 public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
 {
+    [SerializeField] private Stat stat = null;
     [SerializeField] private GameObject unitPrefab = null;
     [SerializeField] private Transform unitSpawnPoint = null;
 
-    
+
 
     #region Server
-
+    public override void OnStartServer()
+    {
+        stat.CheckServerDie += HandleServerDie;
+    }
+    public override void OnStopServer()
+    {
+        stat.CheckServerDie -= HandleServerDie;
+    }
+    [Server]
+    private void HandleServerDie()
+    {
+        NetworkServer.Destroy(gameObject); // building destroy handle 건물 파괴시
+    }
     [Command]
     private void CmdSpawnUnit(){
         GameObject unitInstance = Instantiate(
