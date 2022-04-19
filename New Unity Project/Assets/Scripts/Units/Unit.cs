@@ -11,6 +11,7 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     [SerializeField] private UnitMovement unitMovement = null;
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private Stat stat = null;
+    [SerializeField] private Targetable targetable = null;
 
     [SerializeField] private UnityEvent OnSelected = null;
     //Unity 에서 제공하는 event
@@ -29,7 +30,7 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     public static event Action<Unit> ServerOnUnitDespawned;
     public static event Action<Unit> AuthorityOnUnitSpawned;
     public static event Action<Unit> AuthorityOnUnitDespawned;
-    public static event Action<Unit> SelectedUnitOnDespawned;
+    public static event Action<Unit> SelectedUnitDespawned;
     // event 는 delegate(대리자) 일종 
     // 이벤트는 개체에서 작업 실행을 알리기 위해 보내는 메시지
     
@@ -66,6 +67,12 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     [Server]
     private void HandleServerDie()
     {
+        Destroy(targetable);
+        StartCoroutine(DelayDeath()); // remove targeting
+    }
+    IEnumerator DelayDeath()
+    {
+        yield return new WaitForSeconds(2);
         NetworkServer.Destroy(gameObject);
     }
 
@@ -82,7 +89,7 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     public override void OnStopClient()
     {
         if(!hasAuthority){ return; }
-        SelectedUnitOnDespawned?.Invoke(this);  
+        SelectedUnitDespawned?.Invoke(this);  
         AuthorityOnUnitDespawned?.Invoke(this);
     }
 

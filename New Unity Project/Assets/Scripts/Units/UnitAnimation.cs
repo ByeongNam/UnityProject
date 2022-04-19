@@ -9,9 +9,18 @@ public class UnitAnimation : NetworkBehaviour
     [SerializeField] private NavMeshAgent agent = null;
     [SerializeField] private Animator unitAnimator = null;
     [SerializeField] private NetworkAnimator networkAnimator = null;
+    [SerializeField] private Stat stat = null;
 
     bool isAttacking = false;
 
+    public override void OnStartServer()
+    {
+        stat.CheckServerDie += HandleServerDieAnimation;
+    }
+    public override void OnStopServer()
+    {
+        stat.CheckServerDie -= HandleServerDieAnimation;
+    }
     public float GetAttackAnimationLength()
     {
         return unitAnimator.GetCurrentAnimatorStateInfo(0).length;
@@ -26,7 +35,8 @@ public class UnitAnimation : NetworkBehaviour
     private void Update()
     {
 
-        if(isAttacking){
+        if(isAttacking)
+        {
             isAttacking = false;
             networkAnimator.SetTrigger("Attack");
         }
@@ -34,7 +44,10 @@ public class UnitAnimation : NetworkBehaviour
         unitAnimator.SetBool(
             "Move",agent.velocity.magnitude > 0.3f);// Move animation
     }
-
+    [Server]
+    public void HandleServerDieAnimation(){
+        Debug.Log("Die animation");
+    }
     #endregion
-
+    
 }

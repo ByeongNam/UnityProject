@@ -272,6 +272,7 @@ MonoBehaviour:
   unitMovement: {fileID: 2167313997832353670}
   targeter: {fileID: 1198021915353316558}
   stat: {fileID: -2945162846909101260}
+  targetable: {fileID: 9134587929777239840}
   OnSelected:
     m_PersistentCalls:
       m_Calls:
@@ -303,21 +304,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   animator: {fileID: 1400563846273534190}
-  SelectedUnitOnDespawned:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11500000, guid: d42715f9d6a49aa42b9206865f1b6003, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1286679506738309691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +321,7 @@ MonoBehaviour:
   agent: {fileID: 3215519165388181918}
   unitAnimator: {fileID: 1400563846273534190}
   networkAnimator: {fileID: 2297426286939867506}
+  stat: {fileID: -2945162846909101260}
 --- !u!114 &2167313997832353670
 MonoBehaviour:
   m_ObjectHideFlags: 0

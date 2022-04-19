@@ -14,13 +14,22 @@ public class UnitMovement : NetworkBehaviour
 
     private bool isAttacking = false;
 
+    public override void OnStartServer()
+    {
+        GameOverHandler.ServerGameOver += ServerHandleGameOver;
+    }
+
+    public override void OnStopServer()
+    {
+        GameOverHandler.ServerGameOver -= ServerHandleGameOver;
+    }
     public void StartAttacking(){
         isAttacking = true;
         StartCoroutine(DelayMovement());
     }
 
     IEnumerator DelayMovement(){
-        yield return new WaitForSeconds(unitAnimation.GetAttackAnimationLength());
+        yield return new WaitForSeconds(unitAnimation.GetAttackAnimationLength()-0.2f); // 0.2f 는 선입력
         isAttacking = false;
     }
     #region Server
@@ -63,6 +72,12 @@ public class UnitMovement : NetworkBehaviour
         //해당 soucePosition에 maxDistance의 구체를 생성해서 NavMesh가 있는지 체크, 체크해서 반환하는 변수가 NavMeshHit 
         agent.SetDestination(hit.position);
 
+    }
+
+    [Server]
+    private void ServerHandleGameOver()
+    {
+        agent.isStopped = true;
     }
     
     #endregion

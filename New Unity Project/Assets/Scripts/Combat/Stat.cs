@@ -23,10 +23,27 @@ public class Stat : NetworkBehaviour
     public override void OnStartServer()
     {
         currentHP = healthPoint;
+        UnitBase.ServerPlayerDie += ServerHandlePlayerDie;
     }
-
+    public override void OnStopServer()
+    {
+        UnitBase.ServerPlayerDie -= ServerHandlePlayerDie;
+    }
     [Server]
-    public void DealDamage(int deal){
+    private void ServerHandlePlayerDie(int connectionId)
+    {
+        if(connectionToClient.connectionId != connectionId){ return; }
+
+        DealDamage(currentHP); // suicide
+    }
+    [Server]
+    public void DealDamage(int deal)
+    {
+        if(deal == currentHP){ // 즉사
+            currentHP = 0;
+            CheckServerDie?.Invoke();
+            return;
+        }
         
         if(currentHP == 0) { return; }
 
@@ -41,8 +58,6 @@ public class Stat : NetworkBehaviour
         }
 
         if(currentHP < 0) currentHP = 0;
-
-        Debug.Log(currentHP);
 
         if(currentHP != 0) { return; }
 

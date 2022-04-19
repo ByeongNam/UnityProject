@@ -9,6 +9,7 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     [SerializeField] private Stat stat = null;
     [SerializeField] private GameObject unitPrefab = null;
     [SerializeField] private Transform unitSpawnPoint = null;
+   
 
 
 

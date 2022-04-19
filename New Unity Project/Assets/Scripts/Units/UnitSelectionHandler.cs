@@ -11,20 +11,22 @@ public class UnitSelectionHandler : MonoBehaviour
     // layermask
 
     private Vector2 startPosition;
-    private GamePlayer player;
+    private GamePlayer player = null;
     private Camera mainCamera;
     [SerializeField] public List <Unit> SelectedUnits = new List<Unit>(); // data 을 읽을 수는 있는 접근자 get
     // 커서로 선택된 유닛들 배열(다른 cs 에서 쓰임)
     private void Awake() {
-        Unit.SelectedUnitOnDespawned += RemoveUnitFromSelectedUnits;
+        Unit.SelectedUnitDespawned += RemoveUnitFromSelectedUnits;
     }
     private void Start()
     {
         mainCamera = Camera.main;
         player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
+        GameOverHandler.ClientGameOver += ClientHandleGameOver;
     }
     private void OnDestroy() {
-        Unit.SelectedUnitOnDespawned -= RemoveUnitFromSelectedUnits;
+        Unit.SelectedUnitDespawned -= RemoveUnitFromSelectedUnits;
+        GameOverHandler.ClientGameOver -= ClientHandleGameOver;
     }
     private void Update() 
     {
@@ -116,5 +118,9 @@ public class UnitSelectionHandler : MonoBehaviour
     }
     public void RemoveUnitFromSelectedUnits(Unit unit){
         SelectedUnits.Remove(unit); 
+    }
+
+    private void ClientHandleGameOver(string winner){
+        //enabled = false;
     }
 }
