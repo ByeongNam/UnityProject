@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Building
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - Projectile
+  - Unit
+  - Minimap
+  - Floor
   - 
   - 
   - 

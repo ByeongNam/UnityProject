@@ -1,0 +1,69 @@
+using System.Collections;
+using System.Collections.Generic;
+using Mirror;
+using TMPro;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+public class BuildingButton : MonoBehaviour
+{
+    [SerializeField] private Building building = null;
+    [SerializeField] private Image iconImage = null;
+    [SerializeField] private TMP_Text functionTextUnit = null;
+    [SerializeField] private LayerMask floorMask = new LayerMask();
+    [SerializeField] private UnitSpawner unitSpawner = null;
+
+    private Camera mainCamera;
+    private GamePlayer player;
+
+    private GameObject unitPreviewObject;
+    private Renderer unitPreviewObjectRenderer;
+    private GameObject sabotageArea;
+
+    private void Start() 
+    {
+        mainCamera = Camera.main;
+
+        iconImage.sprite = building.GetUnitIcon();
+
+        if(functionTextUnit == null) { return; }
+
+        if(building.connectionToClient.connectionId == 0){
+            // unit name handling
+            functionTextUnit.text = building.GetUnitId();
+        }
+        else{
+            functionTextUnit.text = building.GetUnitId() + "_z";
+        }
+    }
+    private void Update() 
+    {
+        if(player == null){
+            player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
+        }
+        if(Input.GetKeyDown(KeyCode.F)){
+            OnFKeyDown();
+        }
+        if(Input.GetKeyUp(KeyCode.F)){
+            OnFKeyrUp();
+        }
+        if(unitPreviewObject == null){ return; }
+    }
+    
+    public void OnFKeyDown()
+    {
+        unitPreviewObject = Instantiate(building.GetUnitPreview());
+        unitPreviewObjectRenderer = unitPreviewObject.GetComponentInChildren<Renderer>();
+        unitPreviewObject.transform.position = building.GetUnitSpawnPoint().position;
+        unitPreviewObject.SetActive(true);
+    }
+
+    public void OnFKeyrUp()
+    {
+        if(unitPreviewObject == null){ return; }
+        Destroy(unitPreviewObject);
+        unitSpawner.CmdSpawnUnit();
+    }
+
+}

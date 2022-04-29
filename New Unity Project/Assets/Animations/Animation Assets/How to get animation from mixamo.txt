@@ -1,0 +1,7 @@
+Download Animation in FBX for Unity format, and without skin
+Select animation in unity, convert to humanoid rig, and apply
+On the same page click configure
+Click on Pose, and then Enforce Tpose
+Click Apply, then Done
+Edit the Animation under the fbx and rename the animation name from mixamo.com to a useful animation name
+Duplicate the animation from the fbx to extract it from the fbx, now you have the animation without the fbx

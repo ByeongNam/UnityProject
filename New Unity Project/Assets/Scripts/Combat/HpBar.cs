@@ -9,6 +9,8 @@ public class HpBar : MonoBehaviour
     [SerializeField] private GameObject hpBarObject = null;
     [SerializeField] private Image hpBarImage = null;
     [SerializeField] private Image hpBarAfterImage = null;
+    [SerializeField] private GameObject hpBarLines = null;
+
     private float slowFillAmount = 1f;
     private float currentFillAmount = 1f;
     private float time = 0f;
@@ -16,14 +18,15 @@ public class HpBar : MonoBehaviour
 
     private bool updateUPAfterImageBarFlag;
     private void Awake() {
-        stat.ClientOnHealthUpdated += updateHPbar;
+        stat.ClientOnHealthUpdated += UpdateHPbar;
     }
 
     private void OnDestroy() {
-        stat.ClientOnHealthUpdated -= updateHPbar;
+        stat.ClientOnHealthUpdated -= UpdateHPbar;
     }
     private void Start(){
         hpBarObject.SetActive(false);
+        UpdateHPbarLine(stat.GetHealthPoint());
     }
     
     private void OnMouseOver() {
@@ -37,7 +40,7 @@ public class HpBar : MonoBehaviour
         yield return new WaitForSeconds(1);
         hpBarObject.SetActive(false);
     }
-    private void updateHPbar(int currentHP, int healthPoint){
+    private void UpdateHPbar(int currentHP, int healthPoint){
         currentFillAmount = (float)currentHP / healthPoint;
         hpBarImage.fillAmount = currentFillAmount;
         time = 0f;
@@ -63,6 +66,11 @@ public class HpBar : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
         delayAfterImage = false;
     }
-    
 
+    private void UpdateHPbarLine(int value){
+        float scaleX = 50 / (float) value;
+        foreach(Transform child in hpBarLines.transform){
+            child.gameObject.transform.localScale = new Vector3(scaleX, 1 , 1);
+        }
+    }
 }

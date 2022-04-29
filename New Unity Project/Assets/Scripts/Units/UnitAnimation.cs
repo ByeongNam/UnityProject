@@ -15,11 +15,11 @@ public class UnitAnimation : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        stat.CheckServerDie += HandleServerDieAnimation;
+        stat.CheckServerDie += ServerHandleDieAnimation;
     }
     public override void OnStopServer()
     {
-        stat.CheckServerDie -= HandleServerDieAnimation;
+        stat.CheckServerDie -= ServerHandleDieAnimation;
     }
     public float GetAttackAnimationLength()
     {
@@ -42,11 +42,11 @@ public class UnitAnimation : NetworkBehaviour
         }
         
         unitAnimator.SetBool(
-            "Move",agent.velocity.magnitude > 0.3f);// Move animation
+            "Move",agent.velocity.magnitude > 0.4f);// Move animation
     }
     [Server]
-    public void HandleServerDieAnimation(){
-        Debug.Log("Die animation");
+    public void ServerHandleDieAnimation(){
+        networkAnimator.SetTrigger("Die");
     }
     #endregion
     

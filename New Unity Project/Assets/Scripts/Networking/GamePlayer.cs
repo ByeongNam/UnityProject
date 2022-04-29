@@ -6,6 +6,7 @@ using UnityEngine;
 public class GamePlayer : NetworkBehaviour // 
 {
     [SerializeField] private List <Unit> myUnits = new List<Unit>();
+    private List<Building> myBuildings = new List<Building>();
     public List<Unit> GetMyUnits()
     {
         return myUnits;
@@ -14,17 +15,21 @@ public class GamePlayer : NetworkBehaviour //
     #region Server
     public override void OnStartServer()
     {
-        Unit.ServerOnUnitSpawned += ServerHandleUnitSpawned; // subscribe 
+        Unit.ServerUnitSpawned += ServerHandleUnitSpawned; // subscribe 
         // Unit 에서는 gameplayer.cs 가 연결되어있는지 모름 
         // invoke 하면 event 가 발생하며 연결된 것들에게 전달
         // 함수 인자는 Action< > 에서 정해짐
-        Unit.ServerOnUnitDespawned += ServerHandleUnitDespawned;
+        Unit.ServerUnitDespawned += ServerHandleUnitDespawned;
+        Building.ServerBuildingAdded += ServerHandleBuildingAdded;
+        Building.ServerBuildingDespawned += ServerHandleBuildingDespawned;
     }
 
     public override void OnStopServer()
     {
-        Unit.ServerOnUnitSpawned -= ServerHandleUnitSpawned;
-        Unit.ServerOnUnitDespawned -= ServerHandleUnitDespawned;
+        Unit.ServerUnitSpawned -= ServerHandleUnitSpawned;
+        Unit.ServerUnitDespawned -= ServerHandleUnitDespawned;
+        Building.ServerBuildingAdded -= ServerHandleBuildingAdded;
+        Building.ServerBuildingDespawned -= ServerHandleBuildingDespawned;
     }
 
     private void ServerHandleUnitSpawned(Unit unit)
@@ -40,20 +45,37 @@ public class GamePlayer : NetworkBehaviour //
         myUnits.Remove(unit);
     }
 
+    private void ServerHandleBuildingAdded(Building building)
+    {
+        if(building.connectionToClient.connectionId != connectionToClient.connectionId){ return; }
+
+        myBuildings.Add(building);
+    }
+    private void ServerHandleBuildingDespawned(Building building)
+    {
+        if(building.connectionToClient.connectionId != connectionToClient.connectionId){ return; }
+
+        myBuildings.Remove(building);
+    }
+
     #endregion
 
     #region Client
     public override void OnStartAuthority() // will be called on the client that owns the object.
     {
         if(NetworkServer.active) { return; } // server x
-        Unit.AuthorityOnUnitSpawned += AuthorityHandleUnitSpawned;
-        Unit.AuthorityOnUnitDespawned += AuthorityHandleUnitDespawned;
+        Unit.AuthorityUnitSpawned += AuthorityHandleUnitSpawned;
+        Unit.AuthorityUnitDespawned += AuthorityHandleUnitDespawned;
+        Building.AuthorityBuildingAdded += AuthorityHandleBuildingAdded;
+        Building.AuthorityBuildingDespawned += AuthorityHandleBuildingDespawned;
     }
     public override void OnStopClient()
     {
         if(!isClientOnly || !hasAuthority) { return; }
-        Unit.AuthorityOnUnitSpawned -= AuthorityHandleUnitSpawned;
-        Unit.AuthorityOnUnitDespawned -= AuthorityHandleUnitDespawned;
+        Unit.AuthorityUnitSpawned -= AuthorityHandleUnitSpawned;
+        Unit.AuthorityUnitDespawned -= AuthorityHandleUnitDespawned;
+        Building.AuthorityBuildingAdded -= AuthorityHandleBuildingAdded;
+        Building.AuthorityBuildingDespawned -= AuthorityHandleBuildingDespawned;
     }
     private void AuthorityHandleUnitSpawned(Unit unit)
     {
@@ -62,6 +84,14 @@ public class GamePlayer : NetworkBehaviour //
     private void AuthorityHandleUnitDespawned(Unit unit)
     {
         myUnits.Remove(unit);
+    }
+    private void AuthorityHandleBuildingAdded(Building building)
+    {
+        myBuildings.Add(building);
+    }
+    private void AuthorityHandleBuildingDespawned(Building building)
+    {
+        myBuildings.Remove(building);
     }
 
     #endregion

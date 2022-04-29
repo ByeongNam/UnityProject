@@ -26,10 +26,10 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     3. UnityEvent는 C# Event에 비해 최소 두 배 느리고, worst case의 경우 40배까지 느렸다.
     */
 
-    public static event Action<Unit> ServerOnUnitSpawned;
-    public static event Action<Unit> ServerOnUnitDespawned;
-    public static event Action<Unit> AuthorityOnUnitSpawned;
-    public static event Action<Unit> AuthorityOnUnitDespawned;
+    public static event Action<Unit> ServerUnitSpawned;
+    public static event Action<Unit> ServerUnitDespawned;
+    public static event Action<Unit> AuthorityUnitSpawned;
+    public static event Action<Unit> AuthorityUnitDespawned;
     public static event Action<Unit> SelectedUnitDespawned;
     // event 는 delegate(대리자) 일종 
     // 이벤트는 개체에서 작업 실행을 알리기 위해 보내는 메시지
@@ -53,14 +53,14 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
 
     public override void OnStartServer()
     {
-        ServerOnUnitSpawned?.Invoke(this); // trigger (=this happened)
+        ServerUnitSpawned?.Invoke(this); // trigger (=this happened)
         // ? 는 null 검사
         stat.CheckServerDie += HandleServerDie;
     }
 
     public override void OnStopServer()
     {
-        ServerOnUnitDespawned?.Invoke(this);
+        ServerUnitDespawned?.Invoke(this);
         stat.CheckServerDie -= HandleServerDie;
     }
 
@@ -84,13 +84,13 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     {
         if(!hasAuthority){ return; } // server x
               
-        AuthorityOnUnitSpawned?.Invoke(this);
+        AuthorityUnitSpawned?.Invoke(this);
     }
     public override void OnStopClient()
     {
         if(!hasAuthority){ return; }
         SelectedUnitDespawned?.Invoke(this);  
-        AuthorityOnUnitDespawned?.Invoke(this);
+        AuthorityUnitDespawned?.Invoke(this);
     }
 
     [Client]

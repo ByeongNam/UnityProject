@@ -5,7 +5,8 @@ using Mirror;
 using UnityEngine;
 
 public class Stat : NetworkBehaviour
-{
+{   
+    [Range(50,300)] 
     [SerializeField] private int healthPoint = 100;
     [Range(0,10)] 
     [SerializeField] private int defensivePower = 1;
@@ -17,7 +18,9 @@ public class Stat : NetworkBehaviour
 
     [SyncVar(hook = nameof(HPbarUpdate))] //서버에서 각 클라이언트로 동기화, 네트워크 오브젝트 상의 모든 SyncVars 최신 상태가 전송
     private int currentHP;
-
+    public int GetHealthPoint(){
+        return healthPoint;
+    }
     #region Server
 
     public override void OnStartServer()

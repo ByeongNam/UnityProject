@@ -11,17 +11,20 @@ public class UnitMovement : NetworkBehaviour
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private float chaseRange = 5f;
     [SerializeField] private UnitAnimation unitAnimation = null;
+    [SerializeField] private Stat stat = null;
 
     private bool isAttacking = false;
 
     public override void OnStartServer()
     {
         GameOverHandler.ServerGameOver += ServerHandleGameOver;
+        stat.CheckServerDie += HandleServerDie;
     }
 
     public override void OnStopServer()
     {
         GameOverHandler.ServerGameOver -= ServerHandleGameOver;
+        stat.CheckServerDie -= HandleServerDie;
     }
     public void StartAttacking(){
         isAttacking = true;
@@ -77,7 +80,12 @@ public class UnitMovement : NetworkBehaviour
     [Server]
     private void ServerHandleGameOver()
     {
-        agent.isStopped = true;
+        agent.enabled = false;
+    }
+
+    [Server]
+    private void HandleServerDie(){
+        agent.enabled = false;
     }
     
     #endregion

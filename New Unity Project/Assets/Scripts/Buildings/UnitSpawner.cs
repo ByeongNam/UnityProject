@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
@@ -9,9 +10,20 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     [SerializeField] private Stat stat = null;
     [SerializeField] private GameObject unitPrefab = null;
     [SerializeField] private Transform unitSpawnPoint = null;
-   
-
-
+    
+    [SerializeField] private UnityEvent OnBuildingSelected = null;
+    //Unity 에서 제공하는 event
+    [SerializeField] private UnityEvent OnBuildingDeselected = null;
+    
+   private void Start() {
+        OnBuildingDeselected?.Invoke();
+    }
+   private void Update() {
+       if(!hasAuthority){ return; }
+       if(Input.GetMouseButtonDown(0)){
+           OnBuildingDeselected?.Invoke();
+       }
+   }
 
     #region Server
     public override void OnStartServer()
@@ -22,13 +34,15 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     {
         stat.CheckServerDie -= HandleServerDie;
     }
+    
+
     [Server]
     private void HandleServerDie()
     {
         NetworkServer.Destroy(gameObject); // building destroy handle 건물 파괴시
     }
     [Command]
-    private void CmdSpawnUnit(){
+    public void CmdSpawnUnit(){
         GameObject unitInstance = Instantiate(
             unitPrefab, 
             unitSpawnPoint.position, 
@@ -50,8 +64,8 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
         
         if(!hasAuthority){ return; }
 
-        CmdSpawnUnit();
+        OnBuildingSelected?.Invoke();
+
     }
-    
     #endregion
 }
