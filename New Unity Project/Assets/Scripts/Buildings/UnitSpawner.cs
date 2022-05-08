@@ -10,20 +10,23 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     [SerializeField] private Stat stat = null;
     [SerializeField] private GameObject unitPrefab = null;
     [SerializeField] private Transform unitSpawnPoint = null;
-    
+
     [SerializeField] private UnityEvent OnBuildingSelected = null;
     //Unity 에서 제공하는 event
     [SerializeField] private UnityEvent OnBuildingDeselected = null;
-    
-   private void Start() {
+
+    private void Start()
+    {
         OnBuildingDeselected?.Invoke();
     }
-   private void Update() {
-       if(!hasAuthority){ return; }
-       if(Input.GetMouseButtonDown(0)){
-           OnBuildingDeselected?.Invoke();
-       }
-   }
+    private void Update()
+    {
+        if (!hasAuthority) { return; }
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnBuildingDeselected?.Invoke();
+        }
+    }
 
     #region Server
     public override void OnStartServer()
@@ -34,18 +37,21 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     {
         stat.CheckServerDie -= HandleServerDie;
     }
-    
+
 
     [Server]
     private void HandleServerDie()
     {
         NetworkServer.Destroy(gameObject); // building destroy handle 건물 파괴시
     }
+    
+
     [Command]
-    public void CmdSpawnUnit(){
+    public void CmdSpawnUnit()
+    {
         GameObject unitInstance = Instantiate(
-            unitPrefab, 
-            unitSpawnPoint.position, 
+            unitPrefab,
+            unitSpawnPoint.position,
             unitSpawnPoint.rotation);
 
         NetworkServer.Spawn(unitInstance, connectionToClient);
@@ -60,9 +66,9 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData) // UI 에서 마우스 클릭 이벤트를 감지
     {
-        if(eventData.button != PointerEventData.InputButton.Left){ return; }
-        
-        if(!hasAuthority){ return; }
+        if (eventData.button != PointerEventData.InputButton.Left) { return; }
+
+        if (!hasAuthority) { return; }
 
         OnBuildingSelected?.Invoke();
 

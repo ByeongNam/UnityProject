@@ -56,12 +56,14 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
         ServerUnitSpawned?.Invoke(this); // trigger (=this happened)
         // ? 는 null 검사
         stat.CheckServerDie += HandleServerDie;
+        stat.CheckServerSabotageDie += HandleServerSabotageDie;
     }
 
     public override void OnStopServer()
     {
         ServerUnitDespawned?.Invoke(this);
         stat.CheckServerDie -= HandleServerDie;
+        stat.CheckServerSabotageDie -= HandleServerSabotageDie;
     }
 
     [Server]
@@ -73,6 +75,12 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     IEnumerator DelayDeath()
     {
         yield return new WaitForSeconds(2);
+        NetworkServer.Destroy(gameObject);
+    }
+
+    [Server]
+    private void HandleServerSabotageDie()
+    {
         NetworkServer.Destroy(gameObject);
     }
 

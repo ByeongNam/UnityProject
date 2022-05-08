@@ -9,22 +9,19 @@ using UnityEngine.UI;
 public class BuildingButton : MonoBehaviour
 {
     [SerializeField] private Building building = null;
+    [SerializeField] private UnitSpawner unitSpawner = null;
     [SerializeField] private Image iconImage = null;
     [SerializeField] private TMP_Text functionTextUnit = null;
-    [SerializeField] private LayerMask floorMask = new LayerMask();
-    [SerializeField] private UnitSpawner unitSpawner = null;
+    //[SerializeField] private LayerMask floorMask = new LayerMask();
+    
 
-    private Camera mainCamera;
     private GamePlayer player;
 
     private GameObject unitPreviewObject;
     private Renderer unitPreviewObjectRenderer;
-    private GameObject sabotageArea;
 
     private void Start() 
     {
-        mainCamera = Camera.main;
-
         iconImage.sprite = building.GetUnitIcon();
 
         if(functionTextUnit == null) { return; }
@@ -46,7 +43,7 @@ public class BuildingButton : MonoBehaviour
             OnFKeyDown();
         }
         if(Input.GetKeyUp(KeyCode.F)){
-            OnFKeyrUp();
+            OnFKeyUp();
         }
         if(unitPreviewObject == null){ return; }
     }
@@ -59,7 +56,7 @@ public class BuildingButton : MonoBehaviour
         unitPreviewObject.SetActive(true);
     }
 
-    public void OnFKeyrUp()
+    public void OnFKeyUp()
     {
         if(unitPreviewObject == null){ return; }
         Destroy(unitPreviewObject);

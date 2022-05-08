@@ -7,7 +7,6 @@ using UnityEngine;
 public class Building : NetworkBehaviour
 {
     [SerializeField] private GameObject unitPreview = null;
-    [SerializeField] private GameObject sabotageArea = null;
     [SerializeField] private Sprite unitIcon = null;
     [SerializeField] private Transform unitSpawnPoint = null;
     [SerializeField] private int id = -1;
@@ -30,9 +29,6 @@ public class Building : NetworkBehaviour
 
     public GameObject GetUnitPreview(){
         return unitPreview;
-    }
-    public GameObject GetSabotageArea(){
-        return sabotageArea;
     }
     public Transform GetUnitSpawnPoint(){
         return unitSpawnPoint;

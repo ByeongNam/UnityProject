@@ -14,6 +14,7 @@ public class Stat : NetworkBehaviour
     [SerializeField] private int blockRatio = 10;
  
     public event Action CheckServerDie;
+    public event Action CheckServerSabotageDie;
     public event Action<int ,int> ClientOnHealthUpdated;
 
     [SyncVar(hook = nameof(HPbarUpdate))] //서버에서 각 클라이언트로 동기화, 네트워크 오브젝트 상의 모든 SyncVars 최신 상태가 전송
@@ -42,6 +43,10 @@ public class Stat : NetworkBehaviour
     [Server]
     public void DealDamage(int deal)
     {
+        if(deal == -1){
+            CheckServerSabotageDie?.Invoke();
+            return;
+        }
         if(deal == currentHP){ // 즉사
             currentHP = 0;
             CheckServerDie?.Invoke();
