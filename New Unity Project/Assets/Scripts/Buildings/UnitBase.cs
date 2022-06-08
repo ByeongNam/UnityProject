@@ -31,12 +31,6 @@ public class UnitBase : NetworkBehaviour
     private void HandleServerDie()
     {
         ServerPlayerDie?.Invoke(connectionToClient.connectionId);
-        targetable.enabled = false;
-        StartCoroutine(DelayDeath()); // remove targeting
-    }
-    IEnumerator DelayDeath()
-    {
-        yield return new WaitForSeconds(2);
         NetworkServer.Destroy(gameObject);
     }
    

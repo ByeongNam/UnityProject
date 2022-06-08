@@ -42,11 +42,10 @@ public class NeutralBuildingButton : MonoBehaviour
 
     public void OnGKeyUp()
     {
+        if(!sabotageHandler.RemoveSabotageUnit()) { return; }
         
-        if(sabotageHandler.RemoveSabotageUnit())
-        {
-            player.CmdPlaceBuilding(nbuilding.GetId(), nbuilding.gameObject.transform.position); // 건물생성이펙트 여기에
-            sabotageHandler.RemoveBuilding();
-        }
+        player.CmdPlaceBuilding(nbuilding.GetId(), nbuilding.gameObject.transform.position); // 건물생성이펙트 여기에
+        sabotageHandler.RemoveBuilding();
+        
     }
 }

@@ -12,16 +12,18 @@ public class Stat : NetworkBehaviour
     [SerializeField] private int defensivePower = 1;
     [Range(0,50)] 
     [SerializeField] private int blockRatio = 10;
- 
+    
     public event Action CheckServerDie;
     public event Action CheckServerSabotageDie;
     public event Action<int ,int> ClientOnHealthUpdated;
+    public event Action EnableInfectable;
 
     [SyncVar(hook = nameof(HPbarUpdate))] //서버에서 각 클라이언트로 동기화, 네트워크 오브젝트 상의 모든 SyncVars 최신 상태가 전송
     private int currentHP;
     public int GetHealthPoint(){
         return healthPoint;
     }
+
     #region Server
 
     public override void OnStartServer()
@@ -38,7 +40,7 @@ public class Stat : NetworkBehaviour
     {
         if(connectionToClient.connectionId != connectionId){ return; }
 
-        DealDamage(currentHP); // suicide
+        DealDamage(-2); // suicide
     }
     [Server]
     public void DealDamage(int deal)
@@ -47,12 +49,11 @@ public class Stat : NetworkBehaviour
             CheckServerSabotageDie?.Invoke();
             return;
         }
-        if(deal == currentHP){ // 즉사
+        if(deal == -2){
             currentHP = 0;
             CheckServerDie?.Invoke();
             return;
         }
-        
         if(currentHP == 0) { return; }
 
         if(UnityEngine.Random.Range(1,100) <= blockRatio){

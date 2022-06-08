@@ -6,19 +6,28 @@ using UnityEngine;
 
 public class Building : NetworkBehaviour
 {
+    [SerializeField] private GameObject buildingPreview = null;
     [SerializeField] private GameObject unitPreview = null;
     [SerializeField] private Sprite unitIcon = null;
+    [SerializeField] private Sprite buildingIcon = null;
     [SerializeField] private Transform unitSpawnPoint = null;
     [SerializeField] private int id = -1;
+    [SerializeField] private int price = 10;
     [SerializeField] private string unitId = "";
 
-    public static event Action<Building> ServerBuildingAdded;
+    public static event Action<Building> ServerBuildingSpawned;
     public static event Action<Building> ServerBuildingDespawned;
-    public static event Action<Building> AuthorityBuildingAdded;
+    public static event Action<Building> AuthorityBuildingSpawned;
     public static event Action<Building> AuthorityBuildingDespawned;
 
     public Sprite GetUnitIcon(){
         return unitIcon;
+    }
+    public Sprite GetBuildingIcon(){
+        return buildingIcon;
+    }
+    public int GetPrice(){
+        return price;
     }
     public int GetId(){
         return id;
@@ -27,6 +36,9 @@ public class Building : NetworkBehaviour
         return unitId;
     }
 
+    public GameObject GetBuildingPreview(){
+        return buildingPreview;
+    }
     public GameObject GetUnitPreview(){
         return unitPreview;
     }
@@ -38,7 +50,7 @@ public class Building : NetworkBehaviour
 
     public override void OnStartServer()
     {
-        ServerBuildingAdded?.Invoke(this);
+        ServerBuildingSpawned?.Invoke(this);
     }
 
     public override void OnStopServer()
@@ -54,7 +66,7 @@ public class Building : NetworkBehaviour
     {
         if(!hasAuthority){ return; } // server x
               
-        AuthorityBuildingAdded?.Invoke(this);
+        AuthorityBuildingSpawned?.Invoke(this);
     }
     public override void OnStopClient()
     {

@@ -27,11 +27,13 @@ public class NeutralBuilding : NetworkBehaviour, IPointerClickHandler
     #region Server
     public override void OnStartServer()
     {
+        stat.CheckServerDie += HandleServerDie;
         stat.CheckServerSabotageDie += HandleServerSabotageDie;
         ServerNeutralBuildingAdded?.Invoke(this);
     }
     public override void OnStopServer()
     {
+        stat.CheckServerDie -= HandleServerDie;
         stat.CheckServerSabotageDie -= HandleServerSabotageDie;
         ServerNeutralBuildingDespawned?.Invoke(this);
     }
@@ -45,6 +47,12 @@ public class NeutralBuilding : NetworkBehaviour, IPointerClickHandler
         {
             OnBuildingDeselected?.Invoke();
         }
+    }
+
+    [Server]
+    private void HandleServerDie()
+    {
+        NetworkServer.Destroy(gameObject);
     }
 
 

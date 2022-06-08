@@ -24,7 +24,7 @@ public class GamePlayer : NetworkBehaviour //
         // invoke 하면 event 가 발생하며 연결된 것들에게 전달
         // 함수 인자는 Action< > 에서 정해짐
         Unit.ServerUnitDespawned += ServerHandleUnitDespawned;
-        Building.ServerBuildingAdded += ServerHandleBuildingAdded;
+        Building.ServerBuildingSpawned += ServerHandleBuildingSpawned;
         Building.ServerBuildingDespawned += ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded += ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned += ServerHandleNeutralBuildingDespawned;
@@ -35,7 +35,7 @@ public class GamePlayer : NetworkBehaviour //
         }
 
         foreach(GameObject neutralBuildingPoint in neutralBuildingPoints){
-            CmdPlaceNeutralBuilding(neutralBuildingPoint.GetComponent<NeutralBuildingPointId>().GetNeutralBuildingId(),
+            PlaceNeutralBuilding(neutralBuildingPoint.GetComponent<NeutralBuildingPointId>().GetNeutralBuildingId(),
                              neutralBuildingPoint.transform.position);
         }
     }
@@ -44,7 +44,7 @@ public class GamePlayer : NetworkBehaviour //
     {
         Unit.ServerUnitSpawned -= ServerHandleUnitSpawned;
         Unit.ServerUnitDespawned -= ServerHandleUnitDespawned;
-        Building.ServerBuildingAdded -= ServerHandleBuildingAdded;
+        Building.ServerBuildingSpawned -= ServerHandleBuildingSpawned;
         Building.ServerBuildingDespawned -= ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded -= ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned -= ServerHandleNeutralBuildingDespawned;
@@ -63,7 +63,7 @@ public class GamePlayer : NetworkBehaviour //
         myUnits.Remove(unit);
     }
 
-    private void ServerHandleBuildingAdded(Building building)
+    private void ServerHandleBuildingSpawned(Building building)
     {
         if(building.connectionToClient.connectionId != connectionToClient.connectionId){ return; }
 
@@ -109,9 +109,10 @@ public class GamePlayer : NetworkBehaviour //
                     Instantiate(buildingData.gameObject, position, buildingData.transform.rotation);
         
         NetworkServer.Spawn(buildingInstance,connectionToClient);
+
     }
     [Server]
-    public void CmdPlaceNeutralBuilding(int buildingId, Vector3 position)
+    public void PlaceNeutralBuilding(int buildingId, Vector3 position)
     {
         NeutralBuilding buildingData = null;
 
@@ -140,7 +141,7 @@ public class GamePlayer : NetworkBehaviour //
         if(NetworkServer.active) { return; } // server x
         Unit.AuthorityUnitSpawned += AuthorityHandleUnitSpawned;
         Unit.AuthorityUnitDespawned += AuthorityHandleUnitDespawned;
-        Building.AuthorityBuildingAdded += AuthorityHandleBuildingAdded;
+        Building.AuthorityBuildingSpawned += AuthorityHandleBuildingSpawned;
         Building.AuthorityBuildingDespawned += AuthorityHandleBuildingDespawned;
     }
     public override void OnStopClient()
@@ -148,7 +149,7 @@ public class GamePlayer : NetworkBehaviour //
         if(!isClientOnly || !hasAuthority) { return; }
         Unit.AuthorityUnitSpawned -= AuthorityHandleUnitSpawned;
         Unit.AuthorityUnitDespawned -= AuthorityHandleUnitDespawned;
-        Building.AuthorityBuildingAdded -= AuthorityHandleBuildingAdded;
+        Building.AuthorityBuildingSpawned -= AuthorityHandleBuildingSpawned;
         Building.AuthorityBuildingDespawned -= AuthorityHandleBuildingDespawned;
     }
     private void AuthorityHandleUnitSpawned(Unit unit)
@@ -159,7 +160,7 @@ public class GamePlayer : NetworkBehaviour //
     {
         myUnits.Remove(unit);
     }
-    private void AuthorityHandleBuildingAdded(Building building)
+    private void AuthorityHandleBuildingSpawned(Building building)
     {
         myBuildings.Add(building);
     }
