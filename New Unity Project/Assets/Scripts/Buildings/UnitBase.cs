@@ -7,7 +7,6 @@ using UnityEngine;
 public class UnitBase : NetworkBehaviour
 {
     [SerializeField] private Stat stat = null;
-    [SerializeField] private Targetable targetable = null;
     public static event Action<UnitBase> ServerBaseSpawned;
     public static event Action<UnitBase> ServerBaseDespawned;
     public static event Action<int> ServerPlayerDie;

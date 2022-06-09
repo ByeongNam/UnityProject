@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7575310163814754729}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BuildingFuncDisplay
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 1496788708604300827}
   - component: {fileID: 1404595084851747592}
   - component: {fileID: 1508170739468227036}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

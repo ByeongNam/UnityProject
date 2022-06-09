@@ -4,9 +4,11 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
+public class UnitSpawner : NetworkBehaviour
 {
+    [SerializeField] private Building building = null;
     [SerializeField] private Stat stat = null;
     [SerializeField] private GameObject unitPrefab = null;
     [SerializeField] private Transform unitSpawnPoint = null;
@@ -14,18 +16,48 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
     [SerializeField] private UnityEvent OnBuildingSelected = null;
     //Unity 에서 제공하는 event
     [SerializeField] private UnityEvent OnBuildingDeselected = null;
-
+    [SerializeField] private LayerMask layerMask = new LayerMask();
+    private Camera mainCamera;
     private void Start()
     {
+        mainCamera = Camera.main;
         OnBuildingDeselected?.Invoke();
     }
     private void Update()
     {
-        if (!hasAuthority) { return; }
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnBuildingDeselected?.Invoke();
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {   
+            
+            if(!IsPointerOverUIObject()){ OnBuildingDeselected?.Invoke(); }
+            
+            Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask)){
+                //Debug.Log($"hit: {hit.transform.gameObject.GetInstanceID()} , this: {transform.gameObject.GetInstanceID()}");
+                if(hit.transform.gameObject.GetInstanceID() == transform.gameObject.GetInstanceID()){
+                    OnBuildingDeselected?.Invoke();
+                    //Debug.Log("clicked: " + building.GetId() + ", owner: "+ connectionToClient.connectionId);
+                    OnBuildingSelected?.Invoke(); 
+                }
+            }
         }
+    }
+    private bool IsPointerOverUIObject()
+    {
+        bool flag = false;
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue());
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        foreach(RaycastResult result in results){
+            if(result.gameObject.CompareTag("UI")){
+                flag = true;
+            }
+            else if(result.gameObject.CompareTag("Building")){
+                flag = false;
+            }
+        }
+        return flag;
     }
 
     #region Server
@@ -64,14 +96,5 @@ public class UnitSpawner : NetworkBehaviour, IPointerClickHandler
 
     #region Client
 
-    public void OnPointerClick(PointerEventData eventData) // UI 에서 마우스 클릭 이벤트를 감지
-    {
-        if (eventData.button != PointerEventData.InputButton.Left) { return; }
-
-        if (!hasAuthority) { return; }
-
-        OnBuildingSelected?.Invoke();
-
-    }
     #endregion
 }

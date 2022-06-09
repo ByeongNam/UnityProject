@@ -16,7 +16,6 @@ public class Stat : NetworkBehaviour
     public event Action CheckServerDie;
     public event Action CheckServerSabotageDie;
     public event Action<int ,int> ClientOnHealthUpdated;
-    public event Action EnableInfectable;
 
     [SyncVar(hook = nameof(HPbarUpdate))] //서버에서 각 클라이언트로 동기화, 네트워크 오브젝트 상의 모든 SyncVars 최신 상태가 전송
     private int currentHP;

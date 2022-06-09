@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1380566050707126633}
   - component: {fileID: 1045958411332898066}
   - component: {fileID: 8117101621527626855}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FunctionText
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,9 +146,9 @@ GameObject:
   - component: {fileID: 6300467996001650445}
   - component: {fileID: 1801745758854545536}
   - component: {fileID: 1568159298920400904}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FunctionKey
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,9 +281,9 @@ GameObject:
   - component: {fileID: 946284542451460126}
   - component: {fileID: 4679689424168770019}
   - component: {fileID: 4079893663539101054}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BuildingFuncButton_Sabotage
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,9 +360,9 @@ GameObject:
   - component: {fileID: 3296937851179208173}
   - component: {fileID: 772576514465077859}
   - component: {fileID: 574306437004706142}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FunctionIcon
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

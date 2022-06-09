@@ -5,8 +5,9 @@ using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
-public class NeutralBuilding : NetworkBehaviour, IPointerClickHandler
+public class NeutralBuilding : NetworkBehaviour
 {
     [SerializeField] private Stat stat = null;
     [SerializeField] private UnityEvent OnBuildingSelected = null;
@@ -17,6 +18,9 @@ public class NeutralBuilding : NetworkBehaviour, IPointerClickHandler
     
     public static event Action<NeutralBuilding> ServerNeutralBuildingAdded;
     public static event Action<NeutralBuilding> ServerNeutralBuildingDespawned;
+
+    [SerializeField] private LayerMask layerMask = new LayerMask();
+    private Camera mainCamera;
     
     public Sprite GetUnitIcon(){
         return unitIcon;
@@ -39,14 +43,42 @@ public class NeutralBuilding : NetworkBehaviour, IPointerClickHandler
     }
     private void Start()
     {
+        mainCamera = Camera.main;
         OnBuildingDeselected?.Invoke();
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            OnBuildingDeselected?.Invoke();
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {   
+            if(!IsPointerOverUIObject()){ OnBuildingDeselected?.Invoke(); }
+            
+            Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+
+            if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask)){ 
+                if(hit.transform.gameObject == transform.gameObject){
+                    OnBuildingDeselected?.Invoke();
+                    Debug.Log($"clicked: {id}, owner: {connectionToClient.connectionId}");
+                    OnBuildingSelected?.Invoke(); 
+                }
+            }
         }
+    }
+    private bool IsPointerOverUIObject()
+    {
+        bool flag = false;
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Mouse.current.position.x.ReadValue(), Mouse.current.position.y.ReadValue());
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        foreach(RaycastResult result in results){
+            if(result.gameObject.CompareTag("UI")){
+                flag = true;
+            }
+            else if(result.gameObject.CompareTag("Building")){
+                flag = false;
+            }
+        }
+        return flag;
     }
 
     [Server]
@@ -65,14 +97,6 @@ public class NeutralBuilding : NetworkBehaviour, IPointerClickHandler
     #endregion
 
     #region Client
-
-    public void OnPointerClick(PointerEventData eventData) // UI 에서 마우스 클릭 이벤트를 감지
-    {
-        if (eventData.button != PointerEventData.InputButton.Left) { return; }
-
-        OnBuildingSelected?.Invoke();
-
-    }
 
     #endregion
 }

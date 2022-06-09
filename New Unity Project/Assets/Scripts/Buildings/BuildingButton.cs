@@ -50,6 +50,7 @@ public class BuildingButton : MonoBehaviour
     
     public void OnFKeyDown()
     {
+        if(unitPreviewObject != null){ return; }
         unitPreviewObject = Instantiate(building.GetUnitPreview());
         unitPreviewObjectRenderer = unitPreviewObject.GetComponentInChildren<Renderer>();
         unitPreviewObject.transform.position = building.GetUnitSpawnPoint().position;

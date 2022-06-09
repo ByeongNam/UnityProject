@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 3141772817964265101}
   m_Layer: 3
   m_Name: NeutralBuilding
-  m_TagString: Untagged
+  m_TagString: Building
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,7 +156,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.2, y: 1.2, z: 1.2}
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!208 &5479113474475751811
 NavMeshObstacle:
@@ -303,6 +303,9 @@ MonoBehaviour:
         m_CallState: 2
   unitIcon: {fileID: 21300000, guid: 924fb14bf5a8fa84b99a0875140fadd8, type: 3}
   id: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
 --- !u!114 &2907185655070155241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1422,6 +1425,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4044038588789944371}
     m_Modifications:
+    - target: {fileID: 1404595084851747592, guid: ed1f0d2c616fde04e9ef9ca71bbbda74, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404595084851747592, guid: ed1f0d2c616fde04e9ef9ca71bbbda74, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 2265430143972336604, guid: ed1f0d2c616fde04e9ef9ca71bbbda74, type: 3}
       propertyPath: m_Name
       value: BuildingFuncDisplay
@@ -1429,6 +1440,10 @@ PrefabInstance:
     - target: {fileID: 4565864204083152478, guid: ed1f0d2c616fde04e9ef9ca71bbbda74, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592462423434563741, guid: ed1f0d2c616fde04e9ef9ca71bbbda74, type: 3}
+      propertyPath: m_TagString
+      value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 7575310163814754729, guid: ed1f0d2c616fde04e9ef9ca71bbbda74, type: 3}
       propertyPath: m_RootOrder
@@ -1586,6 +1601,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1078104970190992829, guid: b9403b7ef90c9404497c3c24df6be15e, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1475837467877103294, guid: b9403b7ef90c9404497c3c24df6be15e, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     - target: {fileID: 4012083648256391480, guid: b9403b7ef90c9404497c3c24df6be15e, type: 3}
       propertyPath: m_Name
       value: BuildingFuncButton_S
@@ -1593,6 +1616,10 @@ PrefabInstance:
     - target: {fileID: 6346356060582314537, guid: b9403b7ef90c9404497c3c24df6be15e, type: 3}
       propertyPath: m_AssetId
       value: 7a7a4cabcc9283a4980e9d93ea2b5fc0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8548060135685707054, guid: b9403b7ef90c9404497c3c24df6be15e, type: 3}
+      propertyPath: m_TagString
+      value: UI
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
@@ -11,9 +12,22 @@ public class GamePlayer : NetworkBehaviour //
     [SerializeField] private List<Building> myBuildings = new List<Building>();
     [SerializeField] private List<NeutralBuilding> neutralBuildings = new List<NeutralBuilding>();
     [SerializeField] private List<GameObject> neutralBuildingPoints = new List<GameObject>();
+
+    [SyncVar(hook = nameof(ClientHandleResourcesUpdated))] 
+    private int resources = 10;
+
+    public event Action<int> ClientOnResourcesUpdated;
     public List<Unit> GetMyUnits()
     {
         return myUnits;
+    }
+    public int GetResources()
+    {
+        return resources;
+    }
+    public void SetResources(int value)
+    {
+        resources = value;
     }
 
     #region Server
@@ -151,6 +165,11 @@ public class GamePlayer : NetworkBehaviour //
         Unit.AuthorityUnitDespawned -= AuthorityHandleUnitDespawned;
         Building.AuthorityBuildingSpawned -= AuthorityHandleBuildingSpawned;
         Building.AuthorityBuildingDespawned -= AuthorityHandleBuildingDespawned;
+    }
+
+    private void ClientHandleResourcesUpdated(int oldResources, int newResources)
+    {
+        ClientOnResourcesUpdated?.Invoke(newResources);
     }
     private void AuthorityHandleUnitSpawned(Unit unit)
     {

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1380566050707126633}
   - component: {fileID: 1045958411332898066}
   - component: {fileID: 8117101621527626855}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FunctionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 6300467996001650445}
   - component: {fileID: 1801745758854545536}
   - component: {fileID: 1568159298920400904}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FunctionKey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,9 +282,9 @@ GameObject:
   - component: {fileID: 4679689424168770019}
   - component: {fileID: 4079893663539101054}
   - component: {fileID: 8097746342082305002}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BuildingFuncButton
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -363,12 +363,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   building: {fileID: 7043982778319518279, guid: 775a91ec9a86b1749940a3079a0feb2b, type: 3}
+  unitSpawner: {fileID: 6409701713608005376, guid: 775a91ec9a86b1749940a3079a0feb2b, type: 3}
   iconImage: {fileID: 574306437004706142}
   functionTextUnit: {fileID: 8117101621527626855}
-  floorMask:
-    serializedVersion: 2
-    m_Bits: 1024
-  unitSpawner: {fileID: 6409701713608005376, guid: 775a91ec9a86b1749940a3079a0feb2b, type: 3}
 --- !u!1 &8548060135685707054
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +377,7 @@ GameObject:
   - component: {fileID: 3296937851179208173}
   - component: {fileID: 772576514465077859}
   - component: {fileID: 574306437004706142}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FunctionIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
