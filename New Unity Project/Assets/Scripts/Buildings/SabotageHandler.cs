@@ -10,6 +10,7 @@ public class SabotageHandler : NetworkBehaviour
     [SerializeField] int unitRequirementNumberToSabotage = 5;
     [SerializeField] float sabotageRadius = 2.5f;
     [SerializeField] Collider[] units;
+    [SerializeField] LayerMask unitLayer = new LayerMask();
     
     
     private int currentPeaceKeeperCount = 0;
@@ -20,7 +21,7 @@ public class SabotageHandler : NetworkBehaviour
     }
     private void Update() 
     {
-        units = Physics.OverlapSphere(transform.position, sabotageRadius);
+        units = Physics.OverlapSphere(transform.position, sabotageRadius, unitLayer);
     }
 
     IEnumerator DelayForSabotage()

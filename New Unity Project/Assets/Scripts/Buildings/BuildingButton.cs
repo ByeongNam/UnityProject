@@ -51,6 +51,7 @@ public class BuildingButton : MonoBehaviour
     public void OnFKeyDown()
     {
         if(unitPreviewObject != null){ return; }
+        if(!unitSpawner.GetIsSpawnable()){ return; }
         unitPreviewObject = Instantiate(building.GetUnitPreview());
         unitPreviewObjectRenderer = unitPreviewObject.GetComponentInChildren<Renderer>();
         unitPreviewObject.transform.position = building.GetUnitSpawnPoint().position;
@@ -60,6 +61,7 @@ public class BuildingButton : MonoBehaviour
     public void OnFKeyUp()
     {
         if(unitPreviewObject == null){ return; }
+        if(!unitSpawner.GetIsSpawnable()){ return; }
         Destroy(unitPreviewObject);
         unitSpawner.CmdSpawnUnit();
     }

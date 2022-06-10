@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
 {
-
+    [SerializeField] private int resourceCost = 1;
     [SerializeField] private UnitMovement unitMovement = null;
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private Stat stat = null;
@@ -34,6 +34,10 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     // event 는 delegate(대리자) 일종 
     // 이벤트는 개체에서 작업 실행을 알리기 위해 보내는 메시지
     
+    public int GetResourceCost()
+    {
+        return resourceCost;
+    }
     public UnitMovement GetUnitMovement(){
         return unitMovement;
     }

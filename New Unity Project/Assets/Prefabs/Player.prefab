@@ -64,12 +64,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  buildingBlockLayer:
+    serializedVersion: 2
+    m_Bits: 329
+  buildingRangeLimit: 5
   buildings:
   - {fileID: 7043982778319518279, guid: c37a3c7e67d086a47890e955e1f438ec, type: 3}
   - {fileID: 7043982778319518279, guid: 8f05dd27fb7c7154d8bdb62243012043, type: 3}
+  - {fileID: 7043982778319518279, guid: 4cabadca8a4be3341b32348fb7cb2244, type: 3}
   nbuildings:
   - {fileID: 7892036602283280293, guid: 7a7a4cabcc9283a4980e9d93ea2b5fc0, type: 3}
   myUnits: []
   myBuildings: []
   neutralBuildings: []
   neutralBuildingPoints: []
+  check: 0

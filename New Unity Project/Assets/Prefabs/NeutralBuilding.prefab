@@ -338,6 +338,9 @@ MonoBehaviour:
   unitRequirementNumberToSabotage: 5
   sabotageRadius: 2.5
   units: []
+  unitLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &4949570699982813655
 GameObject:
   m_ObjectHideFlags: 0

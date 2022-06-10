@@ -6,6 +6,14 @@ using UnityEngine;
 
 public class Building : NetworkBehaviour
 {
+    public enum BuildingType
+    {
+        Spawner,
+        Generator,
+        ZoneOccupier,
+        Upgrader,
+        
+    }
     [SerializeField] private GameObject buildingPreview = null;
     [SerializeField] private GameObject unitPreview = null;
     [SerializeField] private Sprite unitIcon = null;
@@ -14,12 +22,16 @@ public class Building : NetworkBehaviour
     [SerializeField] private int id = -1;
     [SerializeField] private int price = 10;
     [SerializeField] private string unitId = "";
+    [SerializeField] private BuildingType buildingType = new BuildingType();
 
     public static event Action<Building> ServerBuildingSpawned;
     public static event Action<Building> ServerBuildingDespawned;
     public static event Action<Building> AuthorityBuildingSpawned;
     public static event Action<Building> AuthorityBuildingDespawned;
 
+    public BuildingType GetBuildingType(){
+        return buildingType;
+    } 
     public Sprite GetUnitIcon(){
         return unitIcon;
     }

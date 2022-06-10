@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class GamePlayer : NetworkBehaviour // 
 {
+    [SerializeField] private LayerMask buildingBlockLayer = new LayerMask();
+    [SerializeField] private float buildingRangeLimit = 5f;
     [SerializeField] private Building[] buildings = new Building[0];
     [SerializeField] private NeutralBuilding[] nbuildings = new NeutralBuilding[0];
     [SerializeField] private List <Unit> myUnits = new List<Unit>();
@@ -28,6 +30,33 @@ public class GamePlayer : NetworkBehaviour //
     public void SetResources(int value)
     {
         resources = value;
+    }
+
+    public bool CheckBuildable(BoxCollider buildingCollider, Vector3 position)
+    {
+        Collider[] colls = Physics.OverlapBox(
+            position,
+            buildingCollider.size / 1.1f,
+            Quaternion.identity,
+            buildingBlockLayer);
+        
+
+        if(colls.Length > 1)
+        { 
+            return false; 
+        }
+
+
+        foreach(Building building in myBuildings)
+        {
+            if(building.GetBuildingType() != Building.BuildingType.ZoneOccupier){ continue; }
+
+            if((position -  building.transform.position).sqrMagnitude < (buildingRangeLimit * buildingRangeLimit))
+            { 
+                return true; 
+            }
+        }
+        return false;
     }
 
     #region Server
@@ -119,12 +148,44 @@ public class GamePlayer : NetworkBehaviour //
         
         if(buildingData == null) { return; }
 
+        if(resources < buildingData.GetPrice()) { return; }
+        
+        BoxCollider buildingCollider = buildingData.GetComponent<BoxCollider>();
+
+        //Check whether the given box overlaps with other colliders or not.
+        if(!CheckBuildable(buildingCollider, position)){ return; }
+
         GameObject buildingInstance = 
                     Instantiate(buildingData.gameObject, position, buildingData.transform.rotation);
         
         NetworkServer.Spawn(buildingInstance,connectionToClient);
 
+        SetResources(resources - buildingData.GetPrice());
+
     }
+    [Command]
+    public void CmdSabotagePlaceBuilding(int buildingId, Vector3 position)
+    {
+        Building buildingData = null;
+
+        foreach(Building building in buildings)// 어떤 빌딩인지 id 로 찾기
+        {
+            if(building.GetId() == buildingId) 
+            {
+                buildingData = building;
+                break;
+            }
+        }
+        if(buildingData == null) { return; }
+
+        GameObject buildingInstance = 
+                    Instantiate(buildingData.gameObject, position, buildingData.transform.rotation);
+        
+        NetworkServer.Spawn(buildingInstance,connectionToClient);
+    }
+
+
+
     [Server]
     public void PlaceNeutralBuilding(int buildingId, Vector3 position)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
     private GamePlayer player;
     private GameObject buildingPreviewInstance;
     private Renderer buildingRendererInstance;
+    private BoxCollider buildingCollider;
 
     
 
@@ -29,6 +31,8 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
         iconImage.sprite = building.GetUnitIcon();
         priceText.text = building.GetPrice().ToString();
         nameText.text = building.GetId().ToString();
+
+        buildingCollider = building.GetComponent<BoxCollider>();
     }
 
     private void Update() 
@@ -44,9 +48,13 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
     public void OnPointerDown(PointerEventData eventData)
     {
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
-        buildingPreviewInstance = Instantiate(building.GetBuildingPreview());
-        buildingRendererInstance = buildingPreviewInstance.GetComponentInChildren<Renderer>();
 
+        if(player.GetResources() < building.GetPrice()){ return; }
+
+        buildingPreviewInstance = Instantiate(building.GetBuildingPreview());
+        buildingRendererInstance = buildingPreviewInstance.GetComponentInChildren<MeshRenderer>();
+        buildingPreviewInstance.GetComponent<BoxCollider>().isTrigger = true;
+        buildingPreviewInstance.GetComponent<NavMeshObstacle>().enabled = false;
         buildingPreviewInstance.SetActive(false);
     }
 
@@ -75,5 +83,9 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
         {
             buildingPreviewInstance.SetActive(true);
         }
+
+        Color color = player.CheckBuildable(buildingCollider, hit.point) ? Color.green : Color.red;
+
+        buildingRendererInstance.material.SetColor("_BaseColor",color);
     }
 }
