@@ -10,6 +10,9 @@ public class UnitAnimation : NetworkBehaviour
     [SerializeField] private Animator unitAnimator = null;
     [SerializeField] private NetworkAnimator networkAnimator = null;
     [SerializeField] private Stat stat = null;
+    //[SerializeField] private GameObject characterObject = null;
+    //[SerializeField] private GameObject ragdollObject = null;
+    //[SerializeField] private Rigidbody spine = null;
 
     bool isAttacking = false;
 
@@ -46,6 +49,10 @@ public class UnitAnimation : NetworkBehaviour
     }
     [Server]
     public void ServerHandleDieAnimation(){
+        //characterObject.SetActive(false);
+        //ragdollObject.SetActive(true);
+
+        //spine.AddForce(new Vector3(0f,0f,10f), ForceMode.Impulse);
         networkAnimator.SetTrigger("Die");
     }
     #endregion

@@ -73,11 +73,7 @@ public class UnitMovement : NetworkBehaviour
     [Server]
     public void ServerMove(Vector3 position)
     {
-        if(isAttacking){ 
-            while(isAttacking){
-                StartCoroutine(SimpleDelay());
-            }
-        }
+        if(isAttacking){ return; }
 
         targeter.ClearTarget();
         
@@ -85,10 +81,6 @@ public class UnitMovement : NetworkBehaviour
         //해당 soucePosition에 maxDistance의 구체를 생성해서 NavMesh가 있는지 체크, 체크해서 반환하는 변수가 NavMeshHit 
         agent.SetDestination(hit.position);
 
-    }
-
-    IEnumerator SimpleDelay(){
-        yield return new WaitForSeconds(0.1f);
     }
 
     [Server]
