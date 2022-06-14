@@ -17,6 +17,7 @@ public class UnitSpawner : NetworkBehaviour
     [SerializeField] private TMP_Text unitQueueCountText = null;
     [SerializeField] private Image unitProgressImage = null;
     [SerializeField] private Image buildingIcon = null;
+    [SerializeField] private TMP_Text buildingName = null;
     [SerializeField] private Image unitIcon = null;
     [SerializeField] private int maxUnitQueue = 5;
     [SerializeField] private float spawnMoveRange = 1f;
@@ -45,7 +46,12 @@ public class UnitSpawner : NetworkBehaviour
         mainCamera = Camera.main;
         OnBuildingDeselected?.Invoke();
         buildingIcon.sprite = building.GetBuildingIcon();
-        unitIcon.sprite = building.GetUnitIcon();
+        buildingName.text = building.GetId().ToString();// 빌딩이름으로 변경
+        if(unitIcon != null)
+        {
+            unitIcon.sprite = building.GetUnitIcon();
+        }
+        
     }
     private void Update()
     {

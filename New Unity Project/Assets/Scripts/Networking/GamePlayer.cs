@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class GamePlayer : NetworkBehaviour // 
 {
+    [SerializeField] private Transform cameraTransform = null; 
     [SerializeField] private LayerMask buildingBlockLayer = new LayerMask();
     [SerializeField] private float buildingRangeLimit = 5f;
     [SerializeField] private Building[] buildings = new Building[0];
@@ -19,6 +20,10 @@ public class GamePlayer : NetworkBehaviour //
     private int resources = 10;
 
     public event Action<int> ClientOnResourcesUpdated;
+
+    public Transform GetCameraTransform(){
+        return cameraTransform;
+    }
     public List<Unit> GetMyUnits()
     {
         return myUnits;
