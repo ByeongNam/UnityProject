@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
 {
@@ -12,11 +13,11 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     [SerializeField] private Targeter targeter = null;
     [SerializeField] private Stat stat = null;
     [SerializeField] private Targetable targetable = null;
-
     [SerializeField] private UnityEvent OnSelected = null;
     //Unity 에서 제공하는 event
     [SerializeField] private UnityEvent OnDeselected = null;
     [SerializeField] private Animator animator = null;
+    [SerializeField] private Sprite unitIcon = null;
 
     /*
     1. Event Listener가 2개 이상인 경우, UnityEvent가 C# Event에 비해 메모리를 덜 Allocation한다. (1개인 경우 그 반대)
@@ -34,8 +35,10 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     // event 는 delegate(대리자) 일종 
     // 이벤트는 개체에서 작업 실행을 알리기 위해 보내는 메시지
     
-    public int GetResourceCost()
-    {
+    public Sprite GetUnitIcon(){
+        return unitIcon;
+    }
+    public int GetResourceCost(){
         return resourceCost;
     }
     public UnitMovement GetUnitMovement(){

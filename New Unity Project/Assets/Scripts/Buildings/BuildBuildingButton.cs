@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -15,6 +17,10 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
     [SerializeField] private TMP_Text priceText = null;
     [SerializeField] private TMP_Text nameText = null;
     [SerializeField] private LayerMask floorMask = new LayerMask();
+    [SerializeField] private UnityEvent OnActivateNotEnoughResource = null;
+    [SerializeField] private UnityEvent OnDisableNotEnoughResource = null;
+    public static event Action ShowBuildableRange;
+    public static event Action HideBuildableRange;
 
     private Camera mainCamera;
     private GamePlayer player;
@@ -30,7 +36,7 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
 
         iconImage.sprite = building.GetUnitIcon();
         priceText.text = building.GetPrice().ToString();
-        nameText.text = building.GetId().ToString();
+        nameText.text = building.GetBuildingName();
 
         buildingCollider = building.GetComponent<BoxCollider>();
     }
@@ -49,15 +55,18 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
     {
         if(eventData.button != PointerEventData.InputButton.Left) { return; }
 
-        if(player.GetResources() < building.GetPrice()){ return; }
-
+        if(player.GetResources() < building.GetPrice()){
+            OnActivateNotEnoughResource?.Invoke();
+            StartCoroutine(DisableNotEnoughResource());
+            return; 
+        }
+        ShowBuildableRange?.Invoke();
         buildingPreviewInstance = Instantiate(building.GetBuildingPreview());
         buildingRendererInstance = buildingPreviewInstance.GetComponentInChildren<MeshRenderer>();
         buildingPreviewInstance.GetComponent<BoxCollider>().isTrigger = true;
         buildingPreviewInstance.GetComponent<NavMeshObstacle>().enabled = false;
         buildingPreviewInstance.SetActive(false);
     }
-
     public void OnPointerUp(PointerEventData eventData)
     {
         if(buildingPreviewInstance == null) { return; }
@@ -69,7 +78,13 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
             player.CmdPlaceBuilding(building.GetId(), hit.point);
         }
 
+        HideBuildableRange?.Invoke();
         Destroy(buildingPreviewInstance);
+    }
+
+    IEnumerator DisableNotEnoughResource(){
+        yield return new WaitForSeconds(1);
+        OnDisableNotEnoughResource?.Invoke();
     }
 
     private void UpdateBuildingPreview(){

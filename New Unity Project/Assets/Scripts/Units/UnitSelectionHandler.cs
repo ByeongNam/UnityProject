@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UnitSelectionHandler : MonoBehaviour
 {
     [SerializeField] private RectTransform unitSelectionArea = null;
     [SerializeField] private LayerMask layerMask = new LayerMask();
-    // layermask
+    [SerializeField] private GameObject unitSelectedCanvas = null;
+    [SerializeField] private Image unitSelectedIcon = null;
+    [SerializeField] private TMP_Text unitSelectedText = null;
 
     private Vector2 startPosition;
     private GamePlayer player = null;
@@ -44,6 +48,15 @@ public class UnitSelectionHandler : MonoBehaviour
         else if(Mouse.current.leftButton.isPressed)
         {
             UpdateSelectionArea();
+        }
+
+        if(SelectedUnits.Count != 0)
+        {
+            StartUnitSelectionDisplay();
+        }
+        else
+        {
+            ClearUnitSelectionDisplay();
         }    
     }
     private void StartSelectionArea()
@@ -116,7 +129,26 @@ public class UnitSelectionHandler : MonoBehaviour
             }
         }
     }
-    public void RemoveUnitFromSelectedUnits(Unit unit){
+
+    private void StartUnitSelectionDisplay()
+    {
+        unitSelectedIcon.sprite = SelectedUnits[0].GetUnitIcon();
+        unitSelectedText.text = "+"+ (SelectedUnits.Count - 1).ToString();
+
+        if(unitSelectedCanvas.activeSelf == true) { return; }
+
+        unitSelectedCanvas.SetActive(true);
+
+    }
+
+    private void ClearUnitSelectionDisplay()
+    {
+        if(unitSelectedCanvas.activeSelf == false) { return; }
+
+        unitSelectedCanvas.SetActive(false);
+    }
+    public void RemoveUnitFromSelectedUnits(Unit unit)
+    {
         SelectedUnits.Remove(unit); 
     }
 

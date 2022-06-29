@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3932463618911585254
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324181616404244913, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334454625301339304, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: sceneId
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334454625301339304, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_AssetId
+      value: 71d285eff55ba8c4d86da77371e09f0c
+      objectReference: {fileID: 0}
+    - target: {fileID: 6678379798017133306, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_Name
+      value: MeleeProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 9192344559688174590, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 43537195739899244, guid: 2d0851e61d912234aa6421391da8dbec, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3866bd7a49103bd48ba5caa77816eed4, type: 3}

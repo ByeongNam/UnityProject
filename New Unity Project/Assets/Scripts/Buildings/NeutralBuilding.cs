@@ -2,18 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class NeutralBuilding : NetworkBehaviour
 {
+    [SerializeField] private String buildingName = null;
     [SerializeField] private Stat stat = null;
     [SerializeField] private UnityEvent OnBuildingSelected = null;
     //Unity 에서 제공하는 event
     [SerializeField] private UnityEvent OnBuildingDeselected = null;
     [SerializeField] private Sprite unitIcon = null;
+    [SerializeField] private Sprite buildingIcon = null;
+    [SerializeField] private Image buildingIconImage = null;
+    [SerializeField] private TMP_Text buildingNameText = null;
     [SerializeField] private int id = -1;
     
     public static event Action<NeutralBuilding> ServerNeutralBuildingAdded;
@@ -45,6 +51,8 @@ public class NeutralBuilding : NetworkBehaviour
     {
         mainCamera = Camera.main;
         OnBuildingDeselected?.Invoke();
+        buildingIconImage.sprite = buildingIcon;
+        buildingNameText.text = buildingName;
     }
     private void Update()
     {

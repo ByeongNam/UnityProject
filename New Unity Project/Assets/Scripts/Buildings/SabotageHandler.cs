@@ -11,13 +11,16 @@ public class SabotageHandler : NetworkBehaviour
     [SerializeField] float sabotageRadius = 2.5f;
     [SerializeField] Collider[] units;
     [SerializeField] LayerMask unitLayer = new LayerMask();
-    
+    [SerializeField] TMP_Text neutralBuildingInfo = null;
     
     private int currentPeaceKeeperCount = 0;
     private int currentInfectorCount = 0;
     private bool sabotageEnable = true;
+
+    
     private void Start() {
-        
+        neutralBuildingInfo.text = 
+        $"It looks like we need <color=#8B0000><size=24>{ unitRequirementNumberToSabotage.ToString() }</size></color> people to take over this building";
     }
     private void Update() 
     {

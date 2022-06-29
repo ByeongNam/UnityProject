@@ -30,8 +30,10 @@ public class ResourceGenerator : NetworkBehaviour
         timer -= Time.deltaTime;
 
         if(timer <= 0){
-            player.SetResources(player.GetResources() + PerResources);
-            timer = interval;
+            if(player != null){
+                player.SetResources(player.GetResources() + PerResources);
+                timer = interval;
+            }
         }
     }
 

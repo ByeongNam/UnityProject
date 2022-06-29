@@ -28,6 +28,7 @@ public class UnitSpawner : NetworkBehaviour
     [SerializeField] private UnityEvent OnBuildingDeselected = null;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     [SerializeField] private bool isSpawnable = true;
+    [SerializeField] private GameObject buildableZone = null;
     
     [SyncVar(hook = nameof(ClientHandleQueuedUnitUpdated))]
     private int queuedUnits;
@@ -46,7 +47,7 @@ public class UnitSpawner : NetworkBehaviour
         mainCamera = Camera.main;
         OnBuildingDeselected?.Invoke();
         buildingIcon.sprite = building.GetBuildingIcon();
-        buildingName.text = building.GetId().ToString();// 빌딩이름으로 변경
+        buildingName.text = building.GetBuildingName();// 빌딩이름으로 변경
         if(unitIcon != null)
         {
             unitIcon.sprite = building.GetUnitIcon();
@@ -100,14 +101,27 @@ public class UnitSpawner : NetworkBehaviour
         return flag;
     }
 
+    private void ShowZone(){
+        if(building.GetBuildingType() != Building.BuildingType.ZoneOccupier){ return; }
+        buildableZone.SetActive(true);
+    }
+    private void HideZone(){
+        if(building.GetBuildingType() != Building.BuildingType.ZoneOccupier){ return; }
+        buildableZone.SetActive(false);
+    }
+
     #region Server
     public override void OnStartServer()
     {
         stat.CheckServerDie += HandleServerDie;
+        BuildBuildingButton.ShowBuildableRange += ShowZone;
+        BuildBuildingButton.HideBuildableRange += HideZone;
     }
     public override void OnStopServer()
     {
         stat.CheckServerDie -= HandleServerDie;
+        BuildBuildingButton.ShowBuildableRange -= ShowZone;
+        BuildBuildingButton.HideBuildableRange -= HideZone;
     }
 
     [Server]
@@ -161,6 +175,16 @@ public class UnitSpawner : NetworkBehaviour
     #endregion
 
     #region Client
+    public override void OnStartAuthority()
+    {
+        BuildBuildingButton.ShowBuildableRange += ShowZone;
+        BuildBuildingButton.HideBuildableRange += HideZone;
+    }
+    public override void OnStopClient()
+    {
+        BuildBuildingButton.ShowBuildableRange -= ShowZone;
+        BuildBuildingButton.HideBuildableRange -= HideZone;
+    }
     private void UpdateTimerDisplay()
     {
         float newProgress = unitTimer / unitSpawnDelay;
@@ -185,4 +209,5 @@ public class UnitSpawner : NetworkBehaviour
         unitQueueCountText.text = newValue.ToString();
     }
     #endregion
+
 }

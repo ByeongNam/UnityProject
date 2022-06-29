@@ -14,6 +14,7 @@ public class Building : NetworkBehaviour
         Upgrader,
         
     }
+    [SerializeField] private String buildingName = null;
     [SerializeField] private GameObject buildingPreview = null;
     [SerializeField] private GameObject unitPreview = null;
     [SerializeField] private Sprite unitIcon = null;
@@ -29,6 +30,9 @@ public class Building : NetworkBehaviour
     public static event Action<Building> AuthorityBuildingSpawned;
     public static event Action<Building> AuthorityBuildingDespawned;
 
+    public String GetBuildingName(){
+        return buildingName;
+    }
     public BuildingType GetBuildingType(){
         return buildingType;
     } 
