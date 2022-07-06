@@ -35,6 +35,8 @@ Unity 3D URP 기반으로 제작.
 
 ![image](https://user-images.githubusercontent.com/41105616/177569054-7569bc2a-d093-413c-a61b-be1b11552a12.png)
 
+<hr/>
+
 ### Implementation
 
 * Real-Time Stratagy 카메라 움직임
@@ -50,6 +52,7 @@ Unity 3D URP 기반으로 제작.
 
  추가 구현 요소들은 유닛의 종류 빌딩의 종류와 같은 필수 구현 요소들이 모두 구현이 된 후에 추가적으로 테스트를 진행하면서 구현한다.
 
+<hr/>
 
 ### Network Concept
 ![image](https://user-images.githubusercontent.com/41105616/177563734-529ee4eb-3501-4fdb-8837-a408178ce796.png)
@@ -58,3 +61,5 @@ Unity 3D URP 기반으로 제작.
 * Peer-to-Peer Network
 
 * Using FizzySteamworks Transport in Mirror
+
+<hr/>
