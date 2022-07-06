@@ -1,5 +1,5 @@
 # UnityProject(Unity Mirror를 이용한 실시간 전략게임(RTS) 제작)
-
+<hr/>
 
 
 이 프로젝트에서는 Unity 3D 엔진과 오픈소스인 Mirror를 이용하여 실시간 전략게임(Real-Time Strategy, RTS)을 다룬다.
@@ -11,7 +11,8 @@ Mirror는 Unity에서 사용되는 네트워크의 고수준 API와 네트워크
 Unity 3D URP 기반으로 제작.
 
 #### Temporary Build File 
-  빌드 파일은 구현 완료 후 추가예정
+ +  빌드 파일은 구현 완료 후 추가예정
+
 
 <p align="center">
  
