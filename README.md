@@ -10,7 +10,7 @@ Mirror는 Unity에서 사용되는 네트워크의 고수준 API와 네트워크
 Unity 3D URP 기반으로 제작.
 
 #### Temporary Build File 
- 빌드 파일은 구현 완료 후 추가예정
+  빌드 파일은 구현 완료 후 추가예정
 
 <p align="center">
  
