@@ -22,8 +22,8 @@ Unity 3D URP 기반으로 제작.
 
 ### Network Concept
 ![image](https://user-images.githubusercontent.com/41105616/177563734-529ee4eb-3501-4fdb-8837-a408178ce796.png)
-> 1 vs 1
+* 1 vs 1
 
-> Peer-to-Peer Network
+* Peer-to-Peer Network
 
-> Using FizzySteamworks Transport in Mirror
+* Using FizzySteamworks Transport in Mirror
