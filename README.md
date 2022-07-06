@@ -1,4 +1,5 @@
 # UnityProject(Unity Mirror를 이용한 실시간 전략게임(RTS) 제작)
+===================================================
 
 
 이 프로젝트에서는 Unity 3D 엔진과 오픈소스인 Mirror를 이용하여 실시간 전략게임(Real-Time Strategy, RTS)을 다룬다.
@@ -32,7 +33,7 @@ Unity 3D URP 기반으로 제작.
 
 ![image](https://user-images.githubusercontent.com/41105616/177569054-7569bc2a-d093-413c-a61b-be1b11552a12.png)
 
-###Implementation
+### Implementation
 
 * Real-Time Stratagy 카메라 움직임
 * 드래그, Ctrl, Shift를 사용한 유닛 선택 시스템
