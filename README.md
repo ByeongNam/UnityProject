@@ -20,6 +20,15 @@ Unity 3D URP 기반으로 제작.
 > “This project is licensed under the terms of the MIT license.”
 </p>
 
+### Game Design
+> User Experience: 전술적, 사고적, 실시간
+
+> Theme: Post-apocalypse
+
+> Model: Low poly 
+> <p align="center"> ![image](https://user-images.githubusercontent.com/41105616/177569054-7569bc2a-d093-413c-a61b-be1b11552a12.png)</p>
+
+
 ### Network Concept
 ![image](https://user-images.githubusercontent.com/41105616/177563734-529ee4eb-3501-4fdb-8837-a408178ce796.png)
 * 1 vs 1
