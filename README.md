@@ -7,7 +7,7 @@ Mirror는 Unity에서 사용되는 네트워크의 고수준 API와 네트워크
 Unity 3D URP 기반으로 제작
 
 <p align="center">
-> Genre: Real-Time Strategy(RTS)
+> <a href="https://ko.wikipedia.org/wiki/%EB%B9%84%EB%94%94%EC%98%A4_%EA%B2%8C%EC%9E%84_%EC%9E%A5%EB%A5%B4">Genre: Real-Time Strategy(RTS)</a>
  
 > <a href="https://unity3d.com/get-unity/download/archive">Unity 2021.2.7f1</a>
 </p>
