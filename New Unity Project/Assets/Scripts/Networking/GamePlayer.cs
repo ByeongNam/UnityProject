@@ -18,9 +18,15 @@ public class GamePlayer : NetworkBehaviour //
 
     [SyncVar(hook = nameof(ClientHandleResourcesUpdated))] 
     private int resources = 10;
+    [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]
+    private bool isPartyOwner = false;
 
     public event Action<int> ClientOnResourcesUpdated;
+    public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
 
+    public bool GetIsPartyOwner(){
+        return isPartyOwner;
+    }
     public Transform GetCameraTransform(){
         return cameraTransform;
     }
@@ -32,10 +38,7 @@ public class GamePlayer : NetworkBehaviour //
     {
         return resources;
     }
-    public void SetResources(int value)
-    {
-        resources = value;
-    }
+    
 
     public bool CheckBuildable(BoxCollider buildingCollider, Vector3 position)
     {
@@ -67,6 +70,7 @@ public class GamePlayer : NetworkBehaviour //
     #region Server
     public override void OnStartServer()
     {
+        GameNetworkManager.OnStartGame += ArrangeNeutralBuidling;
         Unit.ServerUnitSpawned += ServerHandleUnitSpawned; // subscribe 
         // Unit 에서는 gameplayer.cs 가 연결되어있는지 모름 
         // invoke 하면 event 가 발생하며 연결된 것들에게 전달
@@ -76,26 +80,30 @@ public class GamePlayer : NetworkBehaviour //
         Building.ServerBuildingDespawned += ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded += ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned += ServerHandleNeutralBuildingDespawned;
-        if(!hasAuthority){ return; }
-        GameObject points = GameObject.Find("NeutralBuildingPoints");
-        for(int i=0; i< points.transform.childCount; i++){
-            neutralBuildingPoints.Add(points.transform.GetChild(i).gameObject);
-        }
-
-        foreach(GameObject neutralBuildingPoint in neutralBuildingPoints){
-            PlaceNeutralBuilding(neutralBuildingPoint.GetComponent<NeutralBuildingPointId>().GetNeutralBuildingId(),
-                             neutralBuildingPoint.transform.position);
-        }
+       
+        
     }
 
     public override void OnStopServer()
     {
+        GameNetworkManager.OnStartGame -= ArrangeNeutralBuidling;
         Unit.ServerUnitSpawned -= ServerHandleUnitSpawned;
         Unit.ServerUnitDespawned -= ServerHandleUnitDespawned;
         Building.ServerBuildingSpawned -= ServerHandleBuildingSpawned;
         Building.ServerBuildingDespawned -= ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded -= ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned -= ServerHandleNeutralBuildingDespawned;
+    }
+
+    [Server]
+    public void SetResources(int value)
+    {
+        resources = value;
+    }
+    [Server]
+    public void SetIsPartyOwner(bool state)
+    {
+        isPartyOwner = state;
     }
 
     private void ServerHandleUnitSpawned(Unit unit)
@@ -137,6 +145,13 @@ public class GamePlayer : NetworkBehaviour //
         neutralBuildings.Remove(building);
     }
 
+    [Command]
+    public void CmdStartGame()
+    {
+        if(!isPartyOwner){ return; }
+
+        ((GameNetworkManager)NetworkManager.singleton).StartGame();
+    }
     [Command]
     public void CmdPlaceBuilding(int buildingId, Vector3 position)
     {
@@ -213,6 +228,22 @@ public class GamePlayer : NetworkBehaviour //
         NetworkServer.Spawn(buildingInstance,connectionToClient);
     }
 
+    [Server]
+    private void ArrangeNeutralBuidling()
+    {
+        if(!hasAuthority){ return; }
+        
+        GameObject points = GameObject.Find("NeutralBuildingPoints");
+        for(int i=0; i< points.transform.childCount; i++){
+            neutralBuildingPoints.Add(points.transform.GetChild(i).gameObject);
+        }
+
+        foreach(GameObject neutralBuildingPoint in neutralBuildingPoints){
+            PlaceNeutralBuilding(neutralBuildingPoint.GetComponent<NeutralBuildingPointId>().GetNeutralBuildingId(),
+                             neutralBuildingPoint.transform.position);
+        }
+    }
+
     #endregion
 
     #region Client
@@ -224,9 +255,21 @@ public class GamePlayer : NetworkBehaviour //
         Building.AuthorityBuildingSpawned += AuthorityHandleBuildingSpawned;
         Building.AuthorityBuildingDespawned += AuthorityHandleBuildingDespawned;
     }
+    public override void OnStartClient()
+    {
+        if(NetworkServer.active) { return; } // server x
+
+        ((GameNetworkManager)NetworkManager.singleton).Players.Add(this);
+    }
     public override void OnStopClient()
     {
-        if(!isClientOnly || !hasAuthority) { return; }
+        if(!isClientOnly) { return; }
+
+        ((GameNetworkManager)NetworkManager.singleton).Players.Remove(this);
+
+        if(!hasAuthority) { return; }
+
+
         Unit.AuthorityUnitSpawned -= AuthorityHandleUnitSpawned;
         Unit.AuthorityUnitDespawned -= AuthorityHandleUnitDespawned;
         Building.AuthorityBuildingSpawned -= AuthorityHandleBuildingSpawned;
@@ -236,6 +279,12 @@ public class GamePlayer : NetworkBehaviour //
     private void ClientHandleResourcesUpdated(int oldResources, int newResources)
     {
         ClientOnResourcesUpdated?.Invoke(newResources);
+    }
+    private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState)
+    {
+        if(!hasAuthority) { return; }
+
+        AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
     }
     private void AuthorityHandleUnitSpawned(Unit unit)
     {
