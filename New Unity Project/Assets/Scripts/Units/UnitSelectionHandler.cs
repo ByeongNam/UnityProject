@@ -25,8 +25,8 @@ public class UnitSelectionHandler : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
         GameOverHandler.ClientGameOver += ClientHandleGameOver;
+        player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
     }
     private void OnDestroy() {
         Unit.SelectedUnitDespawned -= RemoveUnitFromSelectedUnits;
@@ -34,9 +34,6 @@ public class UnitSelectionHandler : MonoBehaviour
     }
     private void Update() 
     {
-        if(player == null){
-            player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
-        }
         if(Mouse.current.leftButton.wasPressedThisFrame)
         {
             StartSelectionArea();

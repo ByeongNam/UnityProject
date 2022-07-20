@@ -44,10 +44,10 @@ public class GameNetworkManager : NetworkManager
 
     public void StartGame(){
         if(Players.Count < 2){ return; }
-
-        OnStartGame?.Invoke();
         
         isGameInProgress = true;
+
+        OnStartGame?.Invoke();
 
         ServerChangeScene("Scene_Map_01"); // 맵 이름 input으로 변경
     }

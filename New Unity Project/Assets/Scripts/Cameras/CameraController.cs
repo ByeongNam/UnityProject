@@ -29,17 +29,7 @@ public class CameraController : NetworkBehaviour
     [ClientCallback]
     private void Start() 
     {
-        Vector3 pos = playerCameraTransform.position;
-
-        UnitBase[] unitBases = GameObject.FindObjectsOfType<UnitBase>();
-        foreach(UnitBase unitBase in unitBases){
-            if(!hasAuthority) { continue; }
-            pos.x = unitBase.gameObject.transform.position.x;
-            pos.z = -pos.y * (3f/4f) + unitBase.gameObject.transform.position.z; // 60도 삼각함수
-            break;
-        }
-
-        playerCameraTransform.position = pos;
+        GameNetworkManager.OnStartGame += SetDefaultCameraPosition;
     }
 
     [ClientCallback]
@@ -49,6 +39,25 @@ public class CameraController : NetworkBehaviour
 
         UpdateCameraPosition();
 
+    }
+
+    private void OnDestroy() 
+    {
+        GameNetworkManager.OnStartGame -= SetDefaultCameraPosition;
+    }
+
+    private void SetDefaultCameraPosition()
+    {
+        Vector3 pos = playerCameraTransform.position;
+        UnitBase[] unitBases = GameObject.FindObjectsOfType<UnitBase>();
+        foreach(UnitBase unitBase in unitBases){
+            if(!hasAuthority) { continue; }
+            pos.x = unitBase.gameObject.transform.position.x;
+            pos.z = -pos.y * (3f/4f) + unitBase.gameObject.transform.position.z; // 60도 삼각함수
+            break;
+        }
+
+        playerCameraTransform.position = pos;
     }
 
     private void UpdateCameraPosition()

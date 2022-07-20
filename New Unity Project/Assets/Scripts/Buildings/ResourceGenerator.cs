@@ -27,6 +27,7 @@ public class ResourceGenerator : NetworkBehaviour
 
     [ServerCallback]
     private void Update() {
+        
         timer -= Time.deltaTime;
 
         if(timer <= 0){

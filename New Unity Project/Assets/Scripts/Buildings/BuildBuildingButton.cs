@@ -33,19 +33,16 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
     private void Start() 
     {
         mainCamera =  Camera.main;
-
+        
         iconImage.sprite = building.GetUnitIcon();
         priceText.text = building.GetPrice().ToString();
         nameText.text = building.GetBuildingName();
-
+        player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
         buildingCollider = building.GetComponent<BoxCollider>();
     }
 
     private void Update() 
     {
-        if(player == null){
-            player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
-        }
         if(buildingPreviewInstance == null) { return; }
 
         UpdateBuildingPreview();

@@ -24,6 +24,8 @@ public class BuildingButton : MonoBehaviour
     {
         iconImage.sprite = building.GetUnitIcon();
 
+        player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
+
         if(functionTextUnit == null) { return; }
 
         if(building.connectionToClient.connectionId == 0){
@@ -36,9 +38,6 @@ public class BuildingButton : MonoBehaviour
     }
     private void Update() 
     {
-        if(player == null){
-            player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
-        }
         if(Input.GetKeyDown(KeyCode.F)){
             OnFKeyDown();
         }

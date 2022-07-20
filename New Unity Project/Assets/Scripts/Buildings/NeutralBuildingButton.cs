@@ -20,14 +20,15 @@ public class NeutralBuildingButton : MonoBehaviour
 
         if(functionTextUnit == null) { return; }
 
+        player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
+        
         functionTextUnit.text = "hi";
     }
 
     private void Update() 
     {
-        if(player == null){
-            player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
-        }
+        
+
         if(Input.GetKeyDown(KeyCode.G)){
             OnGKeyDown();
         }

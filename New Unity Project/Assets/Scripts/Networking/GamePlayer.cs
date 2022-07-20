@@ -70,7 +70,7 @@ public class GamePlayer : NetworkBehaviour //
     #region Server
     public override void OnStartServer()
     {
-        GameNetworkManager.OnStartGame += ArrangeNeutralBuidling;
+        
         Unit.ServerUnitSpawned += ServerHandleUnitSpawned; // subscribe 
         // Unit 에서는 gameplayer.cs 가 연결되어있는지 모름 
         // invoke 하면 event 가 발생하며 연결된 것들에게 전달
@@ -80,19 +80,23 @@ public class GamePlayer : NetworkBehaviour //
         Building.ServerBuildingDespawned += ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded += ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned += ServerHandleNeutralBuildingDespawned;
-       
-        
+
+        //GameNetworkManager.OnStartGame += ArrangeNeutralBuidling;
+
+        DontDestroyOnLoad(gameObject); // 다른 신으로 넘어갈때 Destroy 되지 않음
     }
 
     public override void OnStopServer()
     {
-        GameNetworkManager.OnStartGame -= ArrangeNeutralBuidling;
         Unit.ServerUnitSpawned -= ServerHandleUnitSpawned;
         Unit.ServerUnitDespawned -= ServerHandleUnitDespawned;
         Building.ServerBuildingSpawned -= ServerHandleBuildingSpawned;
         Building.ServerBuildingDespawned -= ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded -= ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned -= ServerHandleNeutralBuildingDespawned;
+
+        //GameNetworkManager.OnStartGame -= ArrangeNeutralBuidling;
+
     }
 
     [Server]
@@ -231,7 +235,6 @@ public class GamePlayer : NetworkBehaviour //
     [Server]
     private void ArrangeNeutralBuidling()
     {
-        if(!hasAuthority){ return; }
         
         GameObject points = GameObject.Find("NeutralBuildingPoints");
         for(int i=0; i< points.transform.childCount; i++){
@@ -254,10 +257,14 @@ public class GamePlayer : NetworkBehaviour //
         Unit.AuthorityUnitDespawned += AuthorityHandleUnitDespawned;
         Building.AuthorityBuildingSpawned += AuthorityHandleBuildingSpawned;
         Building.AuthorityBuildingDespawned += AuthorityHandleBuildingDespawned;
+
+        
     }
     public override void OnStartClient()
     {
         if(NetworkServer.active) { return; } // server x
+
+        DontDestroyOnLoad(gameObject);
 
         ((GameNetworkManager)NetworkManager.singleton).Players.Add(this);
     }
