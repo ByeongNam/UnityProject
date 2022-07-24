@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject startPagePanel = null;
     [SerializeField] private GameObject landingPagePanel = null;
+    [SerializeField] private LobbyCameraController lobbyCameraController = null;
 
     private void Start() 
     {
@@ -30,8 +31,11 @@ public class MainMenu : MonoBehaviour
     }
     public void HostLobby()
     {
+        if (NetworkServer.active || NetworkClient.active){ return; }
         // adding Camera movement   
         landingPagePanel.SetActive(false);
+
+        lobbyCameraController.MoveToPosition(2);
 
         NetworkManager.singleton.StartHost(); // start host in mirror
     }

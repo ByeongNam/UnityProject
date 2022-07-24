@@ -60,6 +60,8 @@ public class GameNetworkManager : NetworkManager
 
         Players.Add(player);
 
+        player.SetDisplayName($"Player {Players.Count}");
+
         player.SetIsPartyOwner(Players.Count == 1); // 처음 서버에 추가된 플레이어에게 partyowner 부여
     }
 

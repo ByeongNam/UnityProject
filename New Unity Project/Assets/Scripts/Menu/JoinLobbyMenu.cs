@@ -10,6 +10,8 @@ public class JoinLobbyMenu : MonoBehaviour
     [SerializeField] private GameObject landingPagePanel = null;
     [SerializeField] private TMP_InputField addressInput = null;
     [SerializeField] private Button joinButton = null;
+    [SerializeField] private Button exitButton = null;
+    [SerializeField] private LobbyCameraController lobbyCameraController = null;
 
     private void OnEnable() 
     {
@@ -29,13 +31,17 @@ public class JoinLobbyMenu : MonoBehaviour
 
         NetworkManager.singleton.networkAddress = address;
         NetworkManager.singleton.StartClient();
+        
          
         joinButton.interactable = false;
+        exitButton.interactable = false;
     }
 
     private void HandleClientConnected()
     {
+        lobbyCameraController.MoveToPosition(3);
         joinButton.interactable = true;
+        exitButton.interactable = true;
 
         gameObject.SetActive(false);
         landingPagePanel.SetActive(false);
@@ -45,5 +51,6 @@ public class JoinLobbyMenu : MonoBehaviour
     private void HandleClientDisconnected()
     {
         joinButton.interactable = true;
+        exitButton.interactable = true;
     }
 }

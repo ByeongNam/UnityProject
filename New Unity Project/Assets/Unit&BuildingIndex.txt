@@ -1,0 +1,11 @@
+Temp
+
+Farm
+	P
+	Building
+	- (Unit_Base)	(ZoneOccupier) (Spawnable = 1) (Cost = 0)
+	1 (Farm_House) (Spawner) (Spawnable = 1) (Cost = 10)
+	2 (Green_House) (Generator) (Spawnable = 1) (Cost = 5)
+	3 (Water_Tower) (ZoneOccupier)	(Spawnable = 0) (Cost = 7)
+	4 (Barn) (Generator) (Spawnable = 0) (Cost = 20)
+	5  

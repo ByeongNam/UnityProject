@@ -18,12 +18,27 @@ public class GamePlayer : NetworkBehaviour //
 
     [SyncVar(hook = nameof(ClientHandleResourcesUpdated))] 
     private int resources = 10;
+    [SyncVar(hook = nameof(ClientHandleResourceLimitUpdated))]
+    private int resourceLimit = 30;
     [SyncVar(hook = nameof(AuthorityHandlePartyOwnerStateUpdated))]
     private bool isPartyOwner = false;
+    [SyncVar(hook = nameof(ClientHandleDisplayNameUpdated))]
+    private string displayName;
+
+    private int realResourceLimit = 70;
+    
 
     public event Action<int> ClientOnResourcesUpdated;
+    public event Action<int> ClientOnResourceLimitUpdated;
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
+    public static event Action ClientOnInfoUpdated;
 
+    public int GetResourceLimit(){
+        return resourceLimit;
+    }
+    public string GetDisplayName(){
+        return displayName;
+    }
     public bool GetIsPartyOwner(){
         return isPartyOwner;
     }
@@ -81,7 +96,7 @@ public class GamePlayer : NetworkBehaviour //
         NeutralBuilding.ServerNeutralBuildingAdded += ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned += ServerHandleNeutralBuildingDespawned;
 
-        //GameNetworkManager.OnStartGame += ArrangeNeutralBuidling;
+        GameStartMenu.OnGameStartSetting += ArrangeNeutralBuidling;
 
         DontDestroyOnLoad(gameObject); // 다른 신으로 넘어갈때 Destroy 되지 않음
     }
@@ -95,14 +110,28 @@ public class GamePlayer : NetworkBehaviour //
         NeutralBuilding.ServerNeutralBuildingAdded -= ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned -= ServerHandleNeutralBuildingDespawned;
 
-        //GameNetworkManager.OnStartGame -= ArrangeNeutralBuidling;
+        GameStartMenu.OnGameStartSetting -= ArrangeNeutralBuidling;
 
     }
 
+    
+
+    [Server]
+    public void SetDisplayName(string name)
+    {
+        displayName = name;
+    }
     [Server]
     public void SetResources(int value)
     {
+        if(resourceLimit < value) { return; }
         resources = value;
+    }
+    [Server]
+    public void SetResourceLimit(int value)
+    {
+        if(realResourceLimit < value) { return; }
+        resourceLimit = value;
     }
     [Server]
     public void SetIsPartyOwner(bool state)
@@ -270,6 +299,8 @@ public class GamePlayer : NetworkBehaviour //
     }
     public override void OnStopClient()
     {
+        ClientOnInfoUpdated?.Invoke();
+
         if(!isClientOnly) { return; }
 
         ((GameNetworkManager)NetworkManager.singleton).Players.Remove(this);
@@ -283,16 +314,28 @@ public class GamePlayer : NetworkBehaviour //
         Building.AuthorityBuildingDespawned -= AuthorityHandleBuildingDespawned;
     }
 
-    private void ClientHandleResourcesUpdated(int oldResources, int newResources)
+
+
+    private void ClientHandleResourcesUpdated(int oldResources, int newResources) // hook
     {
         ClientOnResourcesUpdated?.Invoke(newResources);
     }
-    private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState)
+    private void ClientHandleResourceLimitUpdated(int oldLimit, int newLimit) // hook
+    {
+        ClientOnResourceLimitUpdated?.Invoke(newLimit);
+    }
+    private void AuthorityHandlePartyOwnerStateUpdated(bool oldState, bool newState) // hook
     {
         if(!hasAuthority) { return; }
 
         AuthorityOnPartyOwnerStateUpdated?.Invoke(newState);
     }
+    private void ClientHandleDisplayNameUpdated(string oldName, string newName)
+    {
+        ClientOnInfoUpdated?.Invoke();
+    }
+
+
     private void AuthorityHandleUnitSpawned(Unit unit)
     {
         myUnits.Add(unit);
