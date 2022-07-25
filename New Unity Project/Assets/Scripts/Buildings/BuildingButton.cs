@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BuildingButton : MonoBehaviour
+public class BuildingButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private Building building = null;
     [SerializeField] private UnitSpawner unitSpawner = null;
@@ -65,4 +65,21 @@ public class BuildingButton : MonoBehaviour
         unitSpawner.CmdSpawnUnit();
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(unitPreviewObject != null){ return; }
+        if(!unitSpawner.GetIsSpawnable()){ return; }
+        unitPreviewObject = Instantiate(building.GetUnitPreview());
+        unitPreviewObjectRenderer = unitPreviewObject.GetComponentInChildren<Renderer>();
+        unitPreviewObject.transform.position = building.GetUnitSpawnPoint().position;
+        unitPreviewObject.SetActive(true);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(unitPreviewObject == null){ return; }
+        if(!unitSpawner.GetIsSpawnable()){ return; }
+        Destroy(unitPreviewObject);
+        unitSpawner.CmdSpawnUnit();
+    }
 }

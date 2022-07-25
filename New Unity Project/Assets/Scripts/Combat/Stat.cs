@@ -9,7 +9,7 @@ public class Stat : NetworkBehaviour
     [Range(50,300)] 
     [SerializeField] private int healthPoint = 100;
     [Range(0,10)] 
-    [SerializeField] private int defensivePower = 1;
+    [SerializeField] private int defensivePower = 0;
     [Range(0,50)] 
     [SerializeField] private int blockRatio = 10;
     
@@ -56,11 +56,9 @@ public class Stat : NetworkBehaviour
         if(currentHP == 0) { return; }
 
         if(UnityEngine.Random.Range(1,100) <= blockRatio){
-            Debug.Log("Blocked!");
             currentHP -= 0; // blocked
         }
         else{
-            Debug.Log("Hit!");
             float decreasedRatio =  1f - ((defensivePower * 10f) / 100f);
             currentHP -= (int)((float)deal * decreasedRatio); // 방어력 감산
         }

@@ -26,6 +26,12 @@ public class GamePlayer : NetworkBehaviour //
     private string displayName;
 
     private int realResourceLimit = 70;
+
+    private int unitAttackUpgrade = 0;
+    private int unitDefenceUpgrade = 0;
+    private int unitBlockUpgrade = 0;
+    private int buildingDefenceUpgrade = 0;
+
     
 
     public event Action<int> ClientOnResourcesUpdated;
@@ -33,6 +39,18 @@ public class GamePlayer : NetworkBehaviour //
     public static event Action<bool> AuthorityOnPartyOwnerStateUpdated;
     public static event Action ClientOnInfoUpdated;
 
+    public int GetUnitAttackUpgrade(){
+        return unitAttackUpgrade;
+    }
+    public int GetUnitDefenceUpgrade(){
+        return unitDefenceUpgrade;
+    }
+    public int GetUnitBlockUpgrade(){
+        return unitBlockUpgrade;
+    }
+    public int GetBuilkdingDefenceUpgrade(){
+        return buildingDefenceUpgrade;
+    }
     public int GetResourceLimit(){
         return resourceLimit;
     }
@@ -124,8 +142,12 @@ public class GamePlayer : NetworkBehaviour //
     [Server]
     public void SetResources(int value)
     {
-        if(resourceLimit < value) { return; }
-        resources = value;
+        if(resourceLimit < value) {
+            resources = resourceLimit;
+        }
+        else{
+            resources = value;
+        }
     }
     [Server]
     public void SetResourceLimit(int value)
