@@ -17103,6 +17103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameStartedDisplay
       objectReference: {fileID: 0}
+    - target: {fileID: 3401121801872462333, guid: a7241d2190771e842a15a2cbfe5123bc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5138858409964759335, guid: a7241d2190771e842a15a2cbfe5123bc, type: 3}
       propertyPath: m_RootOrder
       value: 17
@@ -17203,6 +17207,10 @@ PrefabInstance:
     - target: {fileID: 7869724632956745269, guid: 006f7eadba41da540bbab6ca01268e46, type: 3}
       propertyPath: m_Name
       value: RTSFuncDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869724632956745269, guid: 006f7eadba41da540bbab6ca01268e46, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 006f7eadba41da540bbab6ca01268e46, type: 3}

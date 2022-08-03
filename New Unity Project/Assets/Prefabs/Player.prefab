@@ -75,6 +75,10 @@ MonoBehaviour:
   - {fileID: 7043982778319518279, guid: c37a3c7e67d086a47890e955e1f438ec, type: 3}
   - {fileID: 7043982778319518279, guid: 8f05dd27fb7c7154d8bdb62243012043, type: 3}
   - {fileID: 7043982778319518279, guid: 4cabadca8a4be3341b32348fb7cb2244, type: 3}
+  buildingSpawningEffects:
+  - {fileID: -4043337944913126621, guid: bfcd6a7a29548e34fa2f8642b6bae083, type: 3}
+  - {fileID: -4043337944913126621, guid: 4e06661759cc1f14fb4194f3fcd7fa0e, type: 3}
+  - {fileID: -4043337944913126621, guid: 5c1ee91d3f39e6846b9953473304caff, type: 3}
   nbuildings:
   - {fileID: 2923457787039418197, guid: b490e3970d2929541a2cac7795de2f72, type: 3}
   myUnits: []

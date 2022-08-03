@@ -103,10 +103,12 @@ public class UnitSpawner : NetworkBehaviour
 
     private void ShowZone(){
         if(building.GetBuildingType() != Building.BuildingType.ZoneOccupier){ return; }
+        if(!hasAuthority){ return; }
         buildableZone.SetActive(true);
     }
     private void HideZone(){
         if(building.GetBuildingType() != Building.BuildingType.ZoneOccupier){ return; }
+        if(!hasAuthority){ return; }
         buildableZone.SetActive(false);
     }
 

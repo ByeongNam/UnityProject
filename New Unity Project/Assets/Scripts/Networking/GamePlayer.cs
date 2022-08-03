@@ -10,6 +10,7 @@ public class GamePlayer : NetworkBehaviour //
     [SerializeField] private LayerMask buildingBlockLayer = new LayerMask();
     [SerializeField] private float buildingRangeLimit = 5f;
     [SerializeField] private Building[] buildings = new Building[0];
+    [SerializeField] private ObjectMaterializeHandler[] buildingSpawningEffects = new ObjectMaterializeHandler[0];
     [SerializeField] private NeutralBuilding[] nbuildings = new NeutralBuilding[0];
     [SerializeField] private List <Unit> myUnits = new List<Unit>();
     [SerializeField] private List<Building> myBuildings = new List<Building>();
@@ -211,12 +212,21 @@ public class GamePlayer : NetworkBehaviour //
     public void CmdPlaceBuilding(int buildingId, Vector3 position)
     {
         Building buildingData = null;
+        ObjectMaterializeHandler buildingSpawningEffect = null;
 
         foreach(Building building in buildings)// 어떤 빌딩인지 id 로 찾기
         {
             if(building.GetId() == buildingId) 
             {
                 buildingData = building;
+                break;
+            }
+        }
+        foreach(ObjectMaterializeHandler effect in buildingSpawningEffects)
+        {
+            if(effect.GetId() == buildingId)
+            {
+                buildingSpawningEffect = effect;
                 break;
             }
         }
@@ -230,14 +240,27 @@ public class GamePlayer : NetworkBehaviour //
         //Check whether the given box overlaps with other colliders or not.
         if(!CheckBuildable(buildingCollider, position)){ return; }
 
-        GameObject buildingInstance = 
-                    Instantiate(buildingData.gameObject, position, buildingData.transform.rotation);
-        
-        NetworkServer.Spawn(buildingInstance,connectionToClient);
-
         SetResources(resources - buildingData.GetPrice());
 
+        GameObject buildingEffectInstance = 
+                    Instantiate(buildingSpawningEffect.gameObject, position, buildingSpawningEffect.transform.rotation);
+
+        NetworkServer.Spawn(buildingEffectInstance, connectionToClient);
+        
+        StartCoroutine(BuildingModelDelay(buildingData, position));
+
     }
+
+    IEnumerator BuildingModelDelay(Building buildingData, Vector3 position)
+    {
+        yield return new WaitForSeconds(5);
+
+        GameObject buildingInstance = 
+                    Instantiate(buildingData.gameObject, position, buildingData.transform.rotation);
+
+        NetworkServer.Spawn(buildingInstance, connectionToClient);
+    }
+
     [Command]
     public void CmdSabotagePlaceBuilding(int buildingId, Vector3 position)
     {
