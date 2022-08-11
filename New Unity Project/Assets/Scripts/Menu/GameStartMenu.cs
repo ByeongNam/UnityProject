@@ -5,12 +5,15 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 public class GameStartMenu : MonoBehaviour
 {
     [SerializeField] Image background = null;
     [SerializeField] TMP_Text startMent = null;
     [SerializeField] GameObject button = null;
+
+    public SoftMaskScript softMaskScript = null;
 
     public static event Action OnGameStartSetting;  
 
@@ -25,10 +28,19 @@ public class GameStartMenu : MonoBehaviour
     {
         button.SetActive(false);
         OnGameStartSetting?.Invoke();
-        StartCoroutine(FadeOut());
-        
-    }
 
+        StartCoroutine(Swirl());
+        //StartCoroutine(FadeOut());
+    }
+    IEnumerator Swirl()
+    {
+        while (softMaskScript.CutOff > 0)
+        {
+            softMaskScript.CutOff -= 0.01f;
+            yield return new WaitForSeconds(0.01f);
+        }
+        gameObject.SetActive(false);
+    }
     IEnumerator FadeOut()
     {
         float count = 0;

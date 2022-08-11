@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1455732690132980500}
   - component: {fileID: 1455732690132980501}
   - component: {fileID: 2180939069091661648}
+  - component: {fileID: 438508400771067915}
   m_Layer: 5
   m_Name: GameStartedCanvas
   m_TagString: Untagged
@@ -117,6 +118,24 @@ MonoBehaviour:
   background: {fileID: 6122434307060775179}
   startMent: {fileID: 6685150963211048519}
   button: {fileID: 1909945397501129567}
+  softMaskScript: {fileID: 6257001558277913224}
+--- !u!114 &438508400771067915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1455732690132980498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc69a45cd2765d4db3933346112431a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  letterSpacing: {fileID: 0}
+  curvedText: {fileID: 0}
+  gradient2: {fileID: 0}
+  cylinderText: {fileID: 0}
+  SAUIM: {fileID: 6257001558277913224}
 --- !u!1 &1909945397501129567
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +282,7 @@ GameObject:
   - component: {fileID: 156838427853111576}
   - component: {fileID: 7730212862518107168}
   - component: {fileID: 6122434307060775179}
+  - component: {fileID: 6257001558277913224}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -329,6 +349,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6257001558277913224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2911410532355928722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ee60af491978345bc197ed4e1316bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaskArea: {fileID: 156838427853111576}
+  AlphaMask: {fileID: 2800000, guid: f998567fad16b0d4bbddb4821ced21c5, type: 3}
+  CutOff: 1
+  HardBlend: 1
+  FlipAlphaMask: 1
+  DontClipMaskScalingRect: 1
 --- !u!1 &3401121801872462333
 GameObject:
   m_ObjectHideFlags: 0
