@@ -9,6 +9,7 @@ public class GameNetworkManager : NetworkManager
 {
     [SerializeField] private GameOverHandler gameOverHandler = null;
     [SerializeField] private GameObject unitBasePrefab = null;
+    [SerializeField] private GameObject infectorBasePrefab = null;
 
     public static event Action ClientOnConnected;
     public static event Action ClientOnDisconnected;
@@ -63,6 +64,8 @@ public class GameNetworkManager : NetworkManager
         player.SetDisplayName($"Player {Players.Count}");
 
         player.SetIsPartyOwner(Players.Count == 1); // 처음 서버에 추가된 플레이어에게 partyowner 부여
+
+        player.SetSpecies(Players.Count == 1); // 추가된 플레이어 species 설정
     }
 
     public override void OnServerSceneChanged(string sceneName)
@@ -74,12 +77,25 @@ public class GameNetworkManager : NetworkManager
             NetworkServer.Spawn(gameOverHandlerInstance.gameObject);
 
             foreach(GamePlayer player in Players){
-                GameObject baseInstance = Instantiate(
+                if(player.GetSpecies() == 0)
+                {
+                    GameObject baseInstance = Instantiate(
                     unitBasePrefab,
                     GetStartPosition().position, 
                     Quaternion.identity);
 
-                NetworkServer.Spawn(baseInstance, player.connectionToClient);
+                    NetworkServer.Spawn(baseInstance, player.connectionToClient);
+                }
+                else if(player.GetSpecies() == 1)
+                {
+                    GameObject baseInstance = Instantiate(
+                    infectorBasePrefab,
+                    GetStartPosition().position, 
+                    Quaternion.identity);
+
+                    NetworkServer.Spawn(baseInstance, player.connectionToClient);
+                }
+                
             }
         }
     }

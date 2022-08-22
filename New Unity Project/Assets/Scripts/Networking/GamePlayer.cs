@@ -17,6 +17,9 @@ public class GamePlayer : NetworkBehaviour //
     [SerializeField] private List<NeutralBuilding> neutralBuildings = new List<NeutralBuilding>();
     [SerializeField] private List<GameObject> neutralBuildingPoints = new List<GameObject>();
 
+    [Range(0,1)]
+    [SerializeField] private int species = -1; // 0 : peace, 1 : infector
+
     [SyncVar(hook = nameof(ClientHandleResourcesUpdated))] 
     private int resources = 10;
     [SyncVar(hook = nameof(ClientHandleResourceLimitUpdated))]
@@ -72,7 +75,10 @@ public class GamePlayer : NetworkBehaviour //
     {
         return resources;
     }
-    
+    public int GetSpecies()
+    {
+        return species;
+    }
 
     public bool CheckBuildable(BoxCollider buildingCollider, Vector3 position)
     {
@@ -114,6 +120,8 @@ public class GamePlayer : NetworkBehaviour //
         Building.ServerBuildingDespawned += ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded += ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned += ServerHandleNeutralBuildingDespawned;
+
+
 
         GameStartMenu.OnGameStartSetting += ArrangeNeutralBuidling;
 
@@ -160,6 +168,18 @@ public class GamePlayer : NetworkBehaviour //
     public void SetIsPartyOwner(bool state)
     {
         isPartyOwner = state;
+    }
+    [Server]
+    public void SetSpecies(bool state)
+    {
+        if(state)
+        {
+            species = 0; // peace
+        }
+        else
+        {
+            species = 1; // infect
+        }
     }
 
     private void ServerHandleUnitSpawned(Unit unit)
