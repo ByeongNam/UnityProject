@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1455732690132980500}
   - component: {fileID: 1455732690132980501}
   - component: {fileID: 2180939069091661648}
-  - component: {fileID: 438508400771067915}
   m_Layer: 5
   m_Name: GameStartedCanvas
   m_TagString: Untagged
@@ -119,23 +118,6 @@ MonoBehaviour:
   startMent: {fileID: 6685150963211048519}
   button: {fileID: 1909945397501129567}
   softMaskScript: {fileID: 6257001558277913224}
---- !u!114 &438508400771067915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1455732690132980498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dc69a45cd2765d4db3933346112431a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  letterSpacing: {fileID: 0}
-  curvedText: {fileID: 0}
-  gradient2: {fileID: 0}
-  cylinderText: {fileID: 0}
-  SAUIM: {fileID: 6257001558277913224}
 --- !u!1 &1909945397501129567
 GameObject:
   m_ObjectHideFlags: 0

@@ -47,7 +47,8 @@ public class CameraController : NetworkBehaviour
     }
 
     private void SetDefaultCameraPosition()
-    {
+    {   
+        if(playerCameraTransform == null) { return; }
         Vector3 pos = playerCameraTransform.position;
         UnitBase[] unitBases = GameObject.FindObjectsOfType<UnitBase>();
         foreach(UnitBase unitBase in unitBases){

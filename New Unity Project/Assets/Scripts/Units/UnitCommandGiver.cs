@@ -8,7 +8,8 @@ public class UnitCommandGiver : MonoBehaviour
     [SerializeField] private UnitSelectionHandler unitSelectionHandler = null;
     [SerializeField] private LayerMask layerMask = new LayerMask();
     [SerializeField] private GameObject moveObject = null;
-    [SerializeField] private GameObject autoAttackMode = null;
+    [SerializeField] private GameObject autoAttackObject = null;
+    [SerializeField] private GameObject autoAttackModeUI = null;
 
     private bool autoAttackingMode = false;
     private bool attackNearest = false;
@@ -25,15 +26,16 @@ public class UnitCommandGiver : MonoBehaviour
 
         MoveCommand();  
 
-        if(Input.GetKeyUp(KeyCode.A))
+        if(Input.GetKeyUp(KeyCode.Q))
         {
             if(autoAttackingMode) {
                 autoAttackingMode = false;
-                autoAttackMode.SetActive(false);
+                autoAttackModeUI.SetActive(false);
             }
             else{
+                if(unitSelectionHandler.SelectedUnits.Count == 0){ return; }
                 autoAttackingMode = true;
-                autoAttackMode.SetActive(true);
+                autoAttackModeUI.SetActive(true);
             }
         }
 
@@ -54,6 +56,7 @@ public class UnitCommandGiver : MonoBehaviour
 
         if(autoAttackingMode){
             TryMove(hit.point);
+            StartCoroutine(SpawnAutoAttackObject(hit.point));
             attackNearest = true;
         }
         else{
@@ -67,11 +70,17 @@ public class UnitCommandGiver : MonoBehaviour
                 TryTarget(target);
                 return;
             }
+            if(unitSelectionHandler.SelectedUnits.Count == 0){ return; }
+            StartCoroutine(SpawnMoveObject(hit.point));
             TryMove(hit.point);
             attackNearest = false;
+            foreach(Unit unit in unitSelectionHandler.SelectedUnits)
+            {
+                unit.DisableAutoAttackDetection();
+            }
         }
         autoAttackingMode = false;
-        autoAttackMode.SetActive(false);
+        autoAttackModeUI.SetActive(false);
     }
 
     private void AutoAttack()
@@ -80,7 +89,12 @@ public class UnitCommandGiver : MonoBehaviour
 
        foreach(Unit unit in unitSelectionHandler.SelectedUnits)
         {
-            //units = Physics.OverlapSphere(transform.position, sabotageRadius, unitLayer);
+            unit.StartAutoAttackDetection();
+            Targetable target = unit.FindNearestTarget();
+            if(target == null){ return; }
+            if(target.hasAuthority){ return; }
+            
+            unit.GetTargeter().CmdSetTarget(target.gameObject);
         }   
     }
     
@@ -91,12 +105,18 @@ public class UnitCommandGiver : MonoBehaviour
         {
             unit.GetUnitMovement().CmdMove(point);
         }
-        if(unitSelectionHandler.SelectedUnits.Count == 0){ return; }
-        StartCoroutine(SpawnMoveObject(point));
+        
     }
     IEnumerator SpawnMoveObject(Vector3 point)
     {
         GameObject tempObject = Instantiate(moveObject, point, moveObject.transform.rotation);
+        yield return new WaitForSeconds(0.5f);
+        Destroy(tempObject);
+    }
+
+    IEnumerator SpawnAutoAttackObject(Vector3 point)
+    {
+        GameObject tempObject = Instantiate(autoAttackObject, point, autoAttackObject.transform.rotation);
         yield return new WaitForSeconds(0.5f);
         Destroy(tempObject);
     }

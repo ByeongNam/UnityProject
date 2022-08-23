@@ -306,6 +306,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   animator: {fileID: 1400563846273534190}
+  unitIcon: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 264
 --- !u!114 &1286679506738309691
 MonoBehaviour:
   m_ObjectHideFlags: 0

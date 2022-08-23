@@ -69,7 +69,7 @@ public class SabotageHandler : NetworkBehaviour
             else{
                 foreach (Collider unit in units)
                 {
-                    UnitPeaceKeeper peaceKeeper = unit.gameObject.GetComponent<UnitPeaceKeeper>();;
+                    UnitPeaceKeeper peaceKeeper = unit.gameObject.GetComponent<UnitPeaceKeeper>();
 
                     if(peaceKeeper){
                         currentPeaceKeeperCount--;

@@ -28,13 +28,8 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
         if(functionTextUnit == null) { return; }
 
-        if(building.connectionToClient.connectionId == 0){
             // unit name handling
-            functionTextUnit.text = building.GetUnitId();
-        }
-        else{
-            functionTextUnit.text = building.GetUnitId() + "_z";
-        }
+        functionTextUnit.text = building.GetUnitId();
     }
     private void Update() 
     {

@@ -18,6 +18,10 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     [SerializeField] private UnityEvent OnDeselected = null;
     [SerializeField] private Animator animator = null;
     [SerializeField] private Sprite unitIcon = null;
+    [SerializeField] private Collider[] units = null;
+    private float autoAttackRadius = 2.5f;
+    private bool autoAttackDetection = false;
+    [SerializeField] LayerMask targetLayer = new LayerMask();
 
     /*
     1. Event Listener가 2개 이상인 경우, UnityEvent가 C# Event에 비해 메모리를 덜 Allocation한다. (1개인 경우 그 반대)
@@ -48,12 +52,59 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
         return targeter;
     }
 
+    public void StartAutoAttackDetection()
+    {
+        autoAttackDetection = true;
+    }
+
+    public void DisableAutoAttackDetection()
+    {
+        autoAttackDetection = false;
+    }
+
     public AnimatorStateInfo GetCurrentAnimationInfo(){
         return animator.GetCurrentAnimatorStateInfo(0);
     }
 
-    private void Start() {
+    private void Start() 
+    {
         OnDeselected?.Invoke();
+    }
+    private void Update() 
+    {
+        if(!autoAttackDetection)
+        {
+            units = null;
+            return;
+        }
+        units = Physics.OverlapSphere(transform.position, autoAttackRadius, targetLayer);
+    }
+
+    public Targetable FindNearestTarget()
+    {
+        float minDistance = 99f;
+        Targetable target = null;
+        Targetable realTarget = null;
+        if(units == null)
+        {
+            return null;
+        }
+        else
+        {
+            foreach (Collider unit in units)
+            {
+                float curDistance = Vector3.Distance(transform.position, unit.transform.position);
+                if(minDistance > curDistance)
+                {
+                    minDistance = curDistance;
+                    target = unit.gameObject.GetComponent<Targetable>();
+                    if(target == null){ continue; }
+                    if(target.hasAuthority){ continue; }
+                    realTarget = target;
+                }
+            }
+            return realTarget;
+        }
     }
 
     #region Server

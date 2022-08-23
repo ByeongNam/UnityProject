@@ -17,7 +17,7 @@ public class GameStartMenu : MonoBehaviour
 
     public static event Action OnGameStartSetting;  
 
-    string temp = "They are coming";
+    string temp = "Hint: ";
     
     private void Start() 
     {
