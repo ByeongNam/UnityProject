@@ -46,15 +46,7 @@ public class UnitSelectionHandler : MonoBehaviour
         {
             UpdateSelectionArea();
         }
-
-        if(SelectedUnits.Count != 0)
-        {
-            StartUnitSelectionDisplay();
-        }
-        else
-        {
-            ClearUnitSelectionDisplay();
-        }    
+   
     }
     private void StartSelectionArea()
     {
@@ -92,11 +84,20 @@ public class UnitSelectionHandler : MonoBehaviour
         {
             Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-            if(!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask)){ return; } 
+            if(!Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask)){
+                ClearUnitSelectionDisplay();
+                return; 
+            } 
             // collider 충돌
-            if(!hit.collider.TryGetComponent<Unit>(out Unit unit)){ return; }
+            if(!hit.collider.TryGetComponent<Unit>(out Unit unit)){
+                ClearUnitSelectionDisplay();
+                return;
+            }
 
-            if(!unit.hasAuthority){ return; }
+            if(!unit.hasAuthority){ 
+                ClearUnitSelectionDisplay();
+                return;
+            }
 
             SelectedUnits.Add(unit);
 
@@ -104,8 +105,15 @@ public class UnitSelectionHandler : MonoBehaviour
             {
                 selectedUnit.Select();
             }
-
-            return ;
+            if(SelectedUnits.Count != 0)
+            {
+                StartUnitSelectionDisplay();
+            }
+            else
+            {
+                ClearUnitSelectionDisplay();
+            }
+            return;
         }
         
         Vector2 min = unitSelectionArea.anchoredPosition - (unitSelectionArea.sizeDelta / 2);
@@ -125,12 +133,26 @@ public class UnitSelectionHandler : MonoBehaviour
                 unit.Select();
             }
         }
+
+        if(SelectedUnits.Count != 0)
+        {
+            StartUnitSelectionDisplay();
+        }
+        else
+        {
+            ClearUnitSelectionDisplay();
+        } 
     }
 
     private void StartUnitSelectionDisplay()
     {
         unitSelectedIcon.sprite = SelectedUnits[0].GetUnitIcon();
-        unitSelectedText.text = "+"+ (SelectedUnits.Count - 1).ToString();
+        if(SelectedUnits.Count - 1 != 0)
+        {
+            unitSelectedText.text = "+"+ (SelectedUnits.Count - 1).ToString();
+        }
+        
+        SoundManager.instance.VoicePlay("UnitSelect", SelectedUnits[0].GetUnitSelectClip());
 
         if(unitSelectedCanvas.activeSelf == true) { return; }
 

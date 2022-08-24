@@ -23,6 +23,9 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     private bool autoAttackDetection = false;
     [SerializeField] LayerMask targetLayer = new LayerMask();
 
+    [Header("Sound")]
+    [SerializeField] AudioClip[] unitSelectClip = null;
+
     /*
     1. Event Listener가 2개 이상인 경우, UnityEvent가 C# Event에 비해 메모리를 덜 Allocation한다. (1개인 경우 그 반대)
 
@@ -51,6 +54,9 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     public Targeter GetTargeter(){
         return targeter;
     }
+    public AudioClip GetUnitSelectClip(){
+        return unitSelectClip[UnityEngine.Random.Range(0, unitSelectClip.Length)];
+    }
 
     public void StartAutoAttackDetection()
     {
@@ -69,6 +75,7 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
     private void Start() 
     {
         OnDeselected?.Invoke();
+        
     }
     private void Update() 
     {

@@ -117,6 +117,26 @@ PrefabInstance:
       propertyPath: unitIcon
       value: 
       objectReference: {fileID: 21300000, guid: c720bd36a78f1f943adec30e80c566c3, type: 3}
+    - target: {fileID: 7735976618685924196, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: unitSpawnClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 142c61a69246f964795e2043d2e1e5f5, type: 3}
+    - target: {fileID: 7735976618685924196, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: unitSelectClip.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735976618685924196, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: unitSelectClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 142c61a69246f964795e2043d2e1e5f5, type: 3}
+    - target: {fileID: 7735976618685924196, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: unitSelectClip.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7364e8e9f203f324c91a2e2452c45da6, type: 3}
+    - target: {fileID: 7735976618685924196, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: unitSelectClip.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: e2cfdeaa16f210041b897059127dcdcc, type: 3}
     - target: {fileID: 8231604318224615964, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
       propertyPath: fireRange
       value: 2.1
