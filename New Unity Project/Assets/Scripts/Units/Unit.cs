@@ -100,13 +100,14 @@ public class Unit : NetworkBehaviour // UnitSelectionHandler 에서 쓰임
         {
             foreach (Collider unit in units)
             {
+                if(unit == null){ continue; }
                 float curDistance = Vector3.Distance(transform.position, unit.transform.position);
                 if(minDistance > curDistance)
                 {
-                    minDistance = curDistance;
                     target = unit.gameObject.GetComponent<Targetable>();
                     if(target == null){ continue; }
                     if(target.hasAuthority){ continue; }
+                    minDistance = curDistance;
                     realTarget = target;
                 }
             }
