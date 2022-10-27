@@ -65,7 +65,7 @@ public class NeutralBuilding : NetworkBehaviour
             if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask)){ 
                 if(hit.transform.gameObject == transform.gameObject){
                     OnBuildingDeselected?.Invoke();
-                    Debug.Log($"clicked: {id}, owner: {connectionToClient.connectionId}");
+                    //Debug.Log($"clicked: {id}, owner: {connectionToClient.connectionId}");
                     OnBuildingSelected?.Invoke(); 
                 }
             }

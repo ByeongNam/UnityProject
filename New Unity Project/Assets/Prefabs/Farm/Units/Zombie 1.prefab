@@ -64,6 +64,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2945162846909101260, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: healthPoint
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1400563846273534190, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
       propertyPath: m_Controller
       value: 
@@ -72,6 +76,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2167313997832353670, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: chaseRange
+      value: 1.7
+      objectReference: {fileID: 0}
     - target: {fileID: 3185449252137046294, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
       propertyPath: sceneId
       value: 0
@@ -79,6 +87,10 @@ PrefabInstance:
     - target: {fileID: 3185449252137046294, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
       propertyPath: m_AssetId
       value: 50c1536dc6676fb4b908bb65465dd70e
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215519165388181918, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: m_Speed
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7590366038585131461, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
       propertyPath: m_Color.b
@@ -96,6 +108,14 @@ PrefabInstance:
       propertyPath: unitIcon
       value: 
       objectReference: {fileID: 21300000, guid: c720bd36a78f1f943adec30e80c566c3, type: 3}
+    - target: {fileID: 7735976618685924196, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: unitSelectClip.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7735976618685924196, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
+      propertyPath: unitSelectClip.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 902e7eed3ab970b4c9722f8e0718d0cd, type: 3}
     - target: {fileID: 8231604318224615964, guid: bd4d164ab9d2aa64196e74524e4657f3, type: 3}
       propertyPath: fireRange
       value: 1.8

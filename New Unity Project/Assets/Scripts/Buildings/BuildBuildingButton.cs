@@ -14,6 +14,8 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
 {
     [SerializeField] private Building building = null;
     [SerializeField] private UnitSpawner unitSpawner = null;
+    [SerializeField] private Building building_r = null;
+    [SerializeField] private UnitSpawner unitSpawner_r = null;
     [SerializeField] private Image iconImage = null;
     [SerializeField] private TMP_Text priceText = null;
     [SerializeField] private TMP_Text nameText = null;
@@ -34,17 +36,22 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
     private Renderer buildingRendererInstance;
     private BoxCollider buildingCollider;
 
-    
+    private bool buildable;
 
     private void Start() 
     {
+        player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
+        if(player.netId != 1){
+            building = building_r;
+            unitSpawner = unitSpawner_r;
+        }
         mainCamera =  Camera.main;
         
-        iconImage.sprite = building.GetUnitIcon();
+        iconImage.sprite = building.GetBuildingIcon();
         priceText.text = building.GetPrice().ToString();
         nameText.text = building.GetBuildingName();
         panelNameText.text = building.GetBuildingName();
-        player = NetworkClient.connection.identity.GetComponent<GamePlayer>();
+        
         buildingCollider = building.GetComponent<BoxCollider>();
 
         SetBuildingAttribute();
@@ -114,7 +121,7 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
 
         if(Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, floorMask))
         {
-            player.CmdPlaceBuilding(building.GetId(), hit.point);
+            player.CmdPlaceBuilding(building.GetId(), hit.point, buildable);
         }
 
         HideBuildableRange?.Invoke();
@@ -138,8 +145,8 @@ public class BuildBuildingButton : MonoBehaviour ,IPointerDownHandler, IPointerU
         {
             buildingPreviewInstance.SetActive(true);
         }
-
-        Color color = player.CheckBuildable(buildingCollider, hit.point) ? Color.green : Color.red;
+        buildable = player.CheckBuildable(buildingCollider, hit.point);
+        Color color =  buildable ? Color.green : Color.red;
 
         buildingRendererInstance.material.SetColor("_BaseColor",color);
     }

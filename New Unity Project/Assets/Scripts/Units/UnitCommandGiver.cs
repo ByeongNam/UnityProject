@@ -58,7 +58,7 @@ public class UnitCommandGiver : MonoBehaviour
             TryMove(hit.point);
             StartCoroutine(SpawnAutoAttackObject(hit.point));
             attackNearest = true;
-        }
+        } // autoattack Nearest enable
         else{
             if(hit.collider.TryGetComponent<Targetable>(out Targetable target))
             {

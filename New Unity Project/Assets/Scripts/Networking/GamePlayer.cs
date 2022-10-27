@@ -20,6 +20,8 @@ public class GamePlayer : NetworkBehaviour //
     [Range(0,1)]
     [SerializeField] private int species = -1; // 0 : peace, 1 : infector
 
+    public Collider[] temp;
+
     [SyncVar(hook = nameof(ClientHandleResourcesUpdated))] 
     private int resources = 10;
     [SyncVar(hook = nameof(ClientHandleResourceLimitUpdated))]
@@ -87,13 +89,11 @@ public class GamePlayer : NetworkBehaviour //
             buildingCollider.size / 1.1f,
             Quaternion.identity,
             buildingBlockLayer);
-        
-
+        temp = colls;
         if(colls.Length > 1)
         { 
-            return false; 
+            return false;  // another building is in position
         }
-
 
         foreach(Building building in myBuildings)
         {
@@ -120,8 +120,6 @@ public class GamePlayer : NetworkBehaviour //
         Building.ServerBuildingDespawned += ServerHandleBuildingDespawned;
         NeutralBuilding.ServerNeutralBuildingAdded += ServerHandleNeutralBuildingAdded;
         NeutralBuilding.ServerNeutralBuildingDespawned += ServerHandleNeutralBuildingDespawned;
-
-
 
         GameStartMenu.OnGameStartSetting += ArrangeNeutralBuidling;
 
@@ -229,7 +227,7 @@ public class GamePlayer : NetworkBehaviour //
         ((GameNetworkManager)NetworkManager.singleton).StartGame();
     }
     [Command]
-    public void CmdPlaceBuilding(int buildingId, Vector3 position)
+    public void CmdPlaceBuilding(int buildingId, Vector3 position, bool buildable)
     {
         Building buildingData = null;
         ObjectMaterializeHandler buildingSpawningEffect = null;
@@ -258,7 +256,9 @@ public class GamePlayer : NetworkBehaviour //
         BoxCollider buildingCollider = buildingData.GetComponent<BoxCollider>();
 
         //Check whether the given box overlaps with other colliders or not.
+
         if(!CheckBuildable(buildingCollider, position)){ return; }
+        if(!buildable){ return; }
 
         SetResources(resources - buildingData.GetPrice());
 

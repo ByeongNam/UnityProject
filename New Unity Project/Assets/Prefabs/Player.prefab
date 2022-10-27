@@ -75,16 +75,36 @@ MonoBehaviour:
   - {fileID: 7043982778319518279, guid: c37a3c7e67d086a47890e955e1f438ec, type: 3}
   - {fileID: 7043982778319518279, guid: 8f05dd27fb7c7154d8bdb62243012043, type: 3}
   - {fileID: 7043982778319518279, guid: 4cabadca8a4be3341b32348fb7cb2244, type: 3}
+  - {fileID: 7043982778319518279, guid: 164dbe0fe1bf72a448f13a5d3d9e87fd, type: 3}
+  - {fileID: 7043982778319518279, guid: f953ffe35619ca6499e4c66f2884a066, type: 3}
+  - {fileID: 7043982778319518279, guid: 3d434e9c86a0b16418206a99d59ff3c3, type: 3}
+  - {fileID: 7043982778319518279, guid: 89c8c961a7c9f48419c07585c1a03294, type: 3}
+  - {fileID: 7043982778319518279, guid: 743f874ecd0fa514ab4e8beb441e8c8a, type: 3}
+  - {fileID: 7043982778319518279, guid: a3419b23648889641b61966a0b197c67, type: 3}
+  - {fileID: 7043982778319518279, guid: 9b03d5ce4b7fa06449c5d5a3ce6c7af2, type: 3}
+  - {fileID: 7043982778319518279, guid: a3ddbd9df5b1d9740b65a6ecfb42b02d, type: 3}
+  - {fileID: 7043982778319518279, guid: d3b08543bc6ffd54883a9f2f38da566f, type: 3}
   buildingSpawningEffects:
   - {fileID: -4043337944913126621, guid: bfcd6a7a29548e34fa2f8642b6bae083, type: 3}
   - {fileID: -4043337944913126621, guid: 4e06661759cc1f14fb4194f3fcd7fa0e, type: 3}
   - {fileID: -4043337944913126621, guid: 5c1ee91d3f39e6846b9953473304caff, type: 3}
+  - {fileID: -4043337944913126621, guid: dc81abb068d9e9b458c9c4583d2e10fc, type: 3}
+  - {fileID: -4043337944913126621, guid: 6eb4d60bbecf0d4469a3ba7b531bb8bf, type: 3}
+  - {fileID: -4043337944913126621, guid: b0b8843df68457e408d318e6e502e68a, type: 3}
+  - {fileID: -4043337944913126621, guid: 854fdac39bc413847aa6ece3e5c781b6, type: 3}
+  - {fileID: -4043337944913126621, guid: 4e22ba507b97f954b853d210ddbe679d, type: 3}
+  - {fileID: -4043337944913126621, guid: 5d9f16af873a5d3428a5203d16139092, type: 3}
+  - {fileID: -4043337944913126621, guid: 1519275e8d88c55458d720294d65d8d1, type: 3}
+  - {fileID: -4043337944913126621, guid: d5f6a709e2246ec4693c3e268eb2db6e, type: 3}
+  - {fileID: -4043337944913126621, guid: 40309d8c2a5a5aa4d9b54b6af39c7a37, type: 3}
   nbuildings:
   - {fileID: 2923457787039418197, guid: b490e3970d2929541a2cac7795de2f72, type: 3}
   myUnits: []
   myBuildings: []
   neutralBuildings: []
   neutralBuildingPoints: []
+  species: -1
+  temp: []
 --- !u!114 &4925809022591462102
 MonoBehaviour:
   m_ObjectHideFlags: 0

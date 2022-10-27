@@ -149,7 +149,7 @@ public class UnitSelectionHandler : MonoBehaviour
         unitSelectedIcon.sprite = SelectedUnits[0].GetUnitIcon();
         if(SelectedUnits.Count - 1 != 0)
         {
-            unitSelectedText.text = "+"+ (SelectedUnits.Count - 1).ToString();
+            unitSelectedText.text = " _ "+ (SelectedUnits.Count - 1).ToString();
         }
         
         SoundManager.instance.VoicePlay("UnitSelect", SelectedUnits[0].GetUnitSelectClip());

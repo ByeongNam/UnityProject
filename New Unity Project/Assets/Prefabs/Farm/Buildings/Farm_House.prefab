@@ -995,6 +995,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6238417709980993130, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
+      propertyPath: healthPoint
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 6297638359922003804, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1137,7 +1141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: unitId
-      value: 1
+      value: Purifier
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: unitIcon
@@ -1150,7 +1154,7 @@ PrefabInstance:
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: buildingIcon
       value: 
-      objectReference: {fileID: -1490738611, guid: 5424a0e43d1abc84d98459ceb6962846, type: 3}
+      objectReference: {fileID: 21300000, guid: cc3b814b442e80f439a626532b4afb19, type: 3}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: buildingName
       value: Farm House
@@ -1446,7 +1450,7 @@ MonoBehaviour:
   syncInterval: 0.1
   building: {fileID: 7043982778319518279}
   stat: {fileID: 5917731701942637248}
-  unitPrefab: {fileID: 6334603390832985550, guid: e93c5cf0f6a77774aa3508484784c885, type: 3}
+  unitPrefab: {fileID: 6334603390832985550, guid: c09df5395f4138d48a288d7e2018ec31, type: 3}
   unitSpawnPoint: {fileID: 8915725036524406304}
   unitQueueCountText: {fileID: 6546295960859532221}
   unitProgressImage: {fileID: 682621402246876189}
@@ -1455,7 +1459,7 @@ MonoBehaviour:
   unitIcon: {fileID: 9187204663542911765}
   maxUnitQueue: 5
   spawnMoveRange: 3
-  unitSpawnDelay: 10
+  unitSpawnDelay: 30
   OnBuildingSelected:
     m_PersistentCalls:
       m_Calls:

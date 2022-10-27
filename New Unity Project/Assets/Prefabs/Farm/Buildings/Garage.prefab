@@ -29,7 +29,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4371871333273592985}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4564286593250266344
 GameObject:
@@ -419,6 +419,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2055642512588790997, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2103952297711671225, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -605,7 +609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3469491031337864099, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3469491031337864099, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_LocalScale.x
@@ -901,7 +905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5479113474475751811, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_Extents.x
-      value: 0.79
+      value: 1.325
       objectReference: {fileID: 0}
     - target: {fileID: 5479113474475751811, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_Extents.y
@@ -990,6 +994,14 @@ PrefabInstance:
     - target: {fileID: 6158347669730598559, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6238417709980993130, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
+      propertyPath: healthPoint
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6238417709980993130, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
+      propertyPath: defensivePower
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6297638359922003804, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1121,7 +1133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: id
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: icon
@@ -1129,11 +1141,11 @@ PrefabInstance:
       objectReference: {fileID: -2413806693520163455, guid: 7d65afd8fd3ef9f449403529d987ac89, type: 3}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: price
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: unitId
-      value: 1
+      value: Warrior
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: unitIcon
@@ -1146,14 +1158,14 @@ PrefabInstance:
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: buildingIcon
       value: 
-      objectReference: {fileID: -1490738611, guid: 5424a0e43d1abc84d98459ceb6962846, type: 3}
+      objectReference: {fileID: 21300000, guid: cfaee0df90b0a594eb1a633a40298122, type: 3}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: buildingName
-      value: Farm House
+      value: Garage
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: buildingType
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7309922186532466413, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: sabotageArea
@@ -1185,7 +1197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594643272568416969, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_Size.x
-      value: 1.58
+      value: 2.7687838
       objectReference: {fileID: 0}
     - target: {fileID: 7594643272568416969, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_Size.y
@@ -1197,7 +1209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594643272568416969, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_Center.x
-      value: -0.03932953
+      value: -0.00039453307
       objectReference: {fileID: 0}
     - target: {fileID: 7594643272568416969, guid: 9cc94fef712a7444d92732f2e0815438, type: 3}
       propertyPath: m_Center.y
@@ -1446,7 +1458,7 @@ MonoBehaviour:
   syncInterval: 0.1
   building: {fileID: 7043982778319518279}
   stat: {fileID: 5917731701942637248}
-  unitPrefab: {fileID: 6334603390832985550, guid: e93c5cf0f6a77774aa3508484784c885, type: 3}
+  unitPrefab: {fileID: 6334603390832985550, guid: a4365fa5b4e5c184e8d75e00553776dd, type: 3}
   unitSpawnPoint: {fileID: 8915725036524406304}
   unitQueueCountText: {fileID: 6546295960859532221}
   unitProgressImage: {fileID: 682621402246876189}
@@ -1455,7 +1467,7 @@ MonoBehaviour:
   unitIcon: {fileID: 9187204663542911765}
   maxUnitQueue: 5
   spawnMoveRange: 3
-  unitSpawnDelay: 10
+  unitSpawnDelay: 60
   OnBuildingSelected:
     m_PersistentCalls:
       m_Calls:
@@ -1537,7 +1549,7 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 2147483647
-  isSpawnable: 0
+  isSpawnable: 1
   buildableZone: {fileID: 4564286593250266344}
 --- !u!4 &4371871333273592985 stripped
 Transform:
@@ -1583,7 +1595,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4051301343721656, guid: d15f67cc54a3fd640ab20c8ba977b6c7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.15
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 4051301343721656, guid: d15f67cc54a3fd640ab20c8ba977b6c7, type: 3}
       propertyPath: m_LocalScale.y

@@ -36,8 +36,11 @@ public class GameOverHandler : NetworkBehaviour
         if(bases.Count != 1) { return; }
 
         int playerId = bases[0].connectionToClient.connectionId; // user name 으로 변경 고려
+        string playerString = $"Peace Keeper ( ID : {playerId})";
+        if (playerId != 0)
+            playerString = $"Infector ( ID : {playerId})";
 
-        RpcGameOver($"Player {playerId}"); // 문자열 보간 {} 안에 변수입력
+        RpcGameOver(playerString); // 문자열 보간 {} 안에 변수입력
 
         ServerGameOver?.Invoke();
     }

@@ -18,10 +18,15 @@ public class GameStartMenu : MonoBehaviour
     public static event Action OnGameStartSetting;  
 
     string temp = "Hint: ";
+    string[] cases = {"Press F to spawn unit",
+    "Press G to sabotage neutral building",
+    "Press Q to enable Attack Move",
+    "Resource Generator building make resource per interval"
+    };
     
     private void Start() 
     {
-        startMent.text = temp; 
+        startMent.text = temp + cases[UnityEngine.Random.Range(0, cases.Length)]; 
     }
 
     public void GameStartSetting()

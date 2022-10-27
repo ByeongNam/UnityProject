@@ -27,8 +27,6 @@ public class NeutralBuildingButton : MonoBehaviour
 
     private void Update() 
     {
-        
-
         if(Input.GetKeyDown(KeyCode.G)){
             OnGKeyDown();
         }
@@ -45,7 +43,8 @@ public class NeutralBuildingButton : MonoBehaviour
     {
         if(!sabotageHandler.RemoveSabotageUnit()) { return; }
         
-        player.CmdSabotagePlaceBuilding(nbuilding.GetId(), nbuilding.gameObject.transform.position); // 건물생성이펙트 여기에
+        player.CmdSabotagePlaceBuilding(nbuilding.GetId(), nbuilding.gameObject.transform.position); 
+        
         sabotageHandler.RemoveBuilding();
         
     }

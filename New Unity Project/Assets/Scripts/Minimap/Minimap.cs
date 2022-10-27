@@ -30,7 +30,7 @@ public class Minimap : MonoBehaviour, IPointerDownHandler, IDragHandler
             minimapRect,
             mousePosition,
             null,
-            out Vector2 localPoint)) // point in rectangle?
+            out Vector2 localPoint)) // is point in rectangle
         {
             return;
         }
