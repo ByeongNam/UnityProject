@@ -33,6 +33,10 @@ Unity 3D URP 기반으로 제작.
 
 > Model: Low poly 
 
+>  일대일로 맵에 분포된 한정적인 빌딩을 점령하여 유닛을 생산하고 상대가 점령한 빌딩을 모두 파괴하는 것이다 승리하기 . 위해서는 제한된 빌딩의 유닛들을 적재적소에 사용한다.
+
+> Top-Down Camera
+
 ![image](https://user-images.githubusercontent.com/41105616/177569054-7569bc2a-d093-413c-a61b-be1b11552a12.png)
 
 <hr/>
