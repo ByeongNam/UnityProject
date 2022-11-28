@@ -22,6 +22,7 @@ public class Targeter : NetworkBehaviour
     [Command]
     public void CmdSetTarget(GameObject targetGameObject)
     {
+        if(targetGameObject == null){ return; }
         if(!targetGameObject.TryGetComponent<Targetable>(out Targetable outTarget)){ return; } 
         // targetable cs 유무 확인
 

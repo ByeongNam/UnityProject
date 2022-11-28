@@ -38,7 +38,7 @@ public class Stat : NetworkBehaviour
     private void ServerHandlePlayerDie(int connectionId)
     {
         if(connectionToClient.connectionId != connectionId){ return; }
-
+        Debug.Log(this.gameObject.name);
         DealDamage(-2); // suicide
     }
     [Server]
@@ -50,7 +50,7 @@ public class Stat : NetworkBehaviour
         }
         if(deal == -2){
             currentHP = 0;
-            CheckServerDie?.Invoke();
+            //CheckServerDie?.Invoke();
             return;
         }
         if(currentHP == 0) { return; }

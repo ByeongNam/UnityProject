@@ -21,15 +21,14 @@ public class UnitBase : NetworkBehaviour
     }
     public override void OnStopServer()
     {
-        stat.CheckServerDie -= HandleServerDie;
-
         ServerBaseDespawned?.Invoke(this);
+        stat.CheckServerDie -= HandleServerDie;
     }
 
     [Server]
     private void HandleServerDie()
     {
-        ServerPlayerDie?.Invoke(connectionToClient.connectionId);
+        //ServerPlayerDie?.Invoke(connectionToClient.connectionId);
         NetworkServer.Destroy(gameObject);
     }
    

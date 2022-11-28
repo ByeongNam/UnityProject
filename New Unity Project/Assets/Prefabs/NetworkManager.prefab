@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7945917888252943966}
   - component: {fileID: 7945917888252943953}
   - component: {fileID: 7945917888252943964}
-  - component: {fileID: 2683601466426011034}
+  - component: {fileID: 2153752531148630534}
   - component: {fileID: 7267208847754024515}
   m_Layer: 0
   m_Name: NetworkManager
@@ -140,7 +140,7 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &2683601466426011034
+--- !u!114 &2153752531148630534
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
