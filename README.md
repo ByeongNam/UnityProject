@@ -37,7 +37,6 @@ Unity 3D URP 기반으로 제작.
 
 > Top-Down Camera
 
-![image](https://user-images.githubusercontent.com/41105616/177569054-7569bc2a-d093-413c-a61b-be1b11552a12.png)
 
 <hr/>
 
